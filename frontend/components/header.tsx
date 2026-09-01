@@ -5,7 +5,7 @@ import { caseMeta } from '@/lib/mock-data'
 
 export function Header() {
   return (
-    <header className="cot-header sticky top-0 z-20 flex h-16 items-center gap-4 border-b border-border bg-background/80 px-5 backdrop-blur-md">
+    <header className="sticky top-0 z-20 flex h-16 items-center gap-4 border-b border-border bg-background/80 px-5 backdrop-blur-md">
       <div className="flex items-center gap-3">
         <button className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-1.5 text-sm transition-colors hover:bg-secondary">
           <span className="font-mono text-xs text-muted-foreground">Case</span>
@@ -16,7 +16,7 @@ export function Header() {
         </button>
       </div>
 
-      <div className="cot-search relative ml-2 hidden max-w-md flex-1 md:block">
+      <div className="relative ml-2 hidden max-w-md flex-1 md:block">
         <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
         <input
           type="text"

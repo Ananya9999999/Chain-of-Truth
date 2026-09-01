@@ -27,7 +27,7 @@ export function DashboardShell() {
   const ActivePage = pages[active]
 
   return (
-    <div className="cot-app flex min-h-screen bg-background">
+    <div className="flex min-h-screen bg-background">
       <Sidebar active={active} onNavigate={setActive} />
       <div className="flex min-w-0 flex-1 flex-col">
         <Header />
@@ -51,7 +51,7 @@ export function DashboardShell() {
           </select>
         </div>
 
-        <main className="cot-main mx-auto w-full max-w-[1400px] flex-1 p-5 lg:p-6">
+        <main className="mx-auto w-full max-w-[1400px] flex-1 p-5 lg:p-6">
           <div key={active} className="page-enter">
             <ActivePage />
           </div>
