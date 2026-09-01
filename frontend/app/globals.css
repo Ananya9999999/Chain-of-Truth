@@ -138,6 +138,8 @@
       0 8px 24px -12px oklch(0 0 0 / 60%);
   }
 }
+<<<<<<< HEAD
+=======
 
 /* ── Motion system ── */
 @keyframes cot-fade-up {
@@ -208,3 +210,4 @@
     .hover-lift:hover { transform: none; }
   }
 }
+>>>>>>> origin/main

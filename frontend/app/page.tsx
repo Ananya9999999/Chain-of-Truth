@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+import { DashboardShell } from '@/components/dashboard-shell'
+
+export default function Page() {
+=======
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -29,5 +34,6 @@ export default function HomePage() {
     )
   }
 
+>>>>>>> origin/main
   return <DashboardShell />
 }

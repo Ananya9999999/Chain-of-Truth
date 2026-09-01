@@ -24,3 +24,13 @@ htmlcov/
 .idea/
 .DS_Store
 Thumbs.db
+<<<<<<< HEAD
+.env 
+*.env.local
+node_modules/
+dist/
+.vite/
+storage/*
+.vscode/*
+=======
+>>>>>>> origin/main

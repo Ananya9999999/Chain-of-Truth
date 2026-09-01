@@ -1,5 +1,17 @@
 'use client'
 
+<<<<<<< HEAD
+import { Search, Bell, ChevronDown } from 'lucide-react'
+import { caseMeta } from '@/lib/mock-data'
+
+export function Header() {
+  return (
+    <header className="sticky top-0 z-20 flex h-16 items-center gap-4 border-b border-border bg-background/80 px-5 backdrop-blur-md">
+      <div className="flex items-center gap-3">
+        <button className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-1.5 text-sm transition-colors hover:bg-secondary">
+          <span className="font-mono text-xs text-muted-foreground">Case</span>
+          <span className="font-mono text-sm font-semibold text-foreground">
+=======
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Bell, Search, ChevronDown, LogOut } from 'lucide-react'
@@ -28,6 +40,7 @@ export function Header() {
       <div className="flex items-center gap-2">
         <button className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-1.5 text-sm transition-colors hover:bg-secondary">
           <span className="font-mono text-xs text-muted-foreground">
+>>>>>>> origin/main
             #{caseMeta.id}
           </span>
           <ChevronDown className="size-3.5 text-muted-foreground" />
@@ -53,6 +66,18 @@ export function Header() {
           <span className="absolute top-2 right-2 size-1.5 rounded-full bg-warning" />
         </button>
 
+<<<<<<< HEAD
+        <div className="flex items-center gap-2.5 rounded-lg border border-border bg-card py-1 pr-3 pl-1.5">
+          <div className="flex size-7 items-center justify-center rounded-md bg-primary/15 font-mono text-xs font-semibold text-primary">
+            AM
+          </div>
+          <div className="hidden leading-tight sm:block">
+            <p className="text-xs font-semibold text-foreground">
+              {caseMeta.officer}
+            </p>
+            <p className="text-[10px] text-muted-foreground">{caseMeta.role}</p>
+          </div>
+=======
         <div className="flex items-center gap-2.5 rounded-lg border border-border bg-card py-1 pr-2 pl-1.5">
           <div className="flex size-7 items-center justify-center rounded-md bg-primary/15 font-mono text-xs font-semibold text-primary">
             {initials}
@@ -70,6 +95,7 @@ export function Header() {
           >
             <LogOut className="size-3.5" />
           </button>
+>>>>>>> origin/main
         </div>
       </div>
     </header>
