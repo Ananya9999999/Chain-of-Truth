@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chain of Truth — AI Assists, Humans Decide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: { 950: '#0a0f1a', 900: '#0f172a', 800: '#1e293b', 700: '#334155' },
+            accent: { DEFAULT: '#3b82f6', soft: '#60a5fa', muted: '#1e3a5f' },
+            danger: '#ef4444',
+            success: '#22c55e',
+            warn: '#f59e0b',
+          },
+          fontFamily: {
+            display: ['Georgia', 'Cambria', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: Inter, system-ui, sans-serif; background: #0a0f1a; }
+    .glass { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(51, 65, 85, 0.5); }
+    .timeline-line { background: linear-gradient(to bottom, #3b82f6, #1e3a5f); }
+    .severity-critical { border-left: 4px solid #ef4444; }
+    .severity-high { border-left: 4px solid #f59e0b; }
+    .severity-medium { border-left: 4px solid #3b82f6; }
+    .chip { @apply px-2 py-0.5 rounded-full text-xs font-medium; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    .fade-in { animation: fadeIn 0.4s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body class="text-slate-200 min-h-screen">
+  <!-- Header -->
+  <header class="border-b border-slate-800 sticky top-0 z-50 glass">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-lg bg-accent flex items-center justify-center font-bold text-white text-sm">CoT</div>
+        <div>
+          <h1 class="text-lg font-semibold tracking-tight text-white">Chain of Truth</h1>
+          <p class="text-xs text-slate-400">AI Assists · Humans Decide</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-4 text-sm">
+        <span id="api-status" class="flex items-center gap-1.5 text-slate-400">
+          <span class="w-2 h-2 rounded-full bg-slate-500" id="status-dot"></span>
+          <span id="status-text">Connecting…</span>
+        </span>
+        <button onclick="refreshAll()" class="px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm transition">Refresh</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 py-6 grid grid-cols-12 gap-6">
+    <!-- Left: Case + Evidence -->
+    <section class="col-span-12 lg:col-span-4 space-y-4">
+      <!-- Case Card -->
+      <div class="glass rounded-xl p-5 fade-in">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <p class="text-xs uppercase tracking-wider text-slate-500 mb-1">Active Case</p>
+            <h2 id="case-title" class="text-xl font-semibold text-white leading-tight">Loading…</h2>
+            <p id="case-number" class="text-sm text-accent-soft mt-1 font-mono"></p>
+          </div>
+          <span id="case-status" class="chip bg-amber-500/20 text-amber-300">—</span>
+        </div>
+        <p id="case-desc" class="text-sm text-slate-400 leading-relaxed"></p>
+        <div id="stats-grid" class="grid grid-cols-3 gap-2 mt-4"></div>
+      </div>
+
+      <!-- Evidence List -->
+      <div class="glass rounded-xl p-5">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-semibold text-white">Evidence Locker</h3>
+          <button onclick="showUploadModal()" class="text-xs px-2.5 py-1 rounded bg-accent hover:bg-blue-600 text-white transition">+ Log Evidence</button>
+        </div>
+        <div id="evidence-list" class="space-y-3 max-h-[420px] overflow-y-auto pr-1"></div>
+      </div>
+
+      <!-- Chain Status -->
+      <div class="glass rounded-xl p-4">
+        <div class="flex items-center justify-between">
+          <h3 class="font-semibold text-white text-sm">Hash Chain Integrity</h3>
+          <span id="chain-badge" class="chip">—</span>
+        </div>
+        <p id="chain-msg" class="text-xs text-slate-400 mt-2"></p>
+        <div id="chain-hashes" class="mt-3 space-y-1 font-mono text-[10px] text-slate-500"></div>
+      </div>
+    </section>
+
+    <!-- Center: Timeline + Contradictions -->
+    <section class="col-span-12 lg:col-span-5 space-y-4">
+      <!-- Timeline -->
+      <div class="glass rounded-xl p-5">
+        <h3 class="font-semibold text-white mb-4">Case Timeline <span class="text-xs font-normal text-slate-500">(AI-built · human-verified)</span></h3>
+        <div id="timeline" class="relative pl-6 space-y-4 max-h-[380px] overflow-y-auto"></div>
+      </div>
+
+      <!-- Contradictions -->
+      <div class="glass rounded-xl p-5">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-semibold text-white">Contradiction Detector</h3>
+          <span id="contra-count" class="chip bg-red-500/20 text-red-300">0 open</span>
+        </div>
+        <div id="contradictions" class="space-y-3 max-h-[320px] overflow-y-auto"></div>
+      </div>
+    </section>
+
+    <!-- Right: Guidance + Autopsy + Chargesheet -->
+    <section class="col-span-12 lg:col-span-3 space-y-4">
+      <div class="glass rounded-xl p-5">
+        <h3 class="font-semibold text-white mb-1">Investigation Guidance</h3>
+        <p class="text-xs text-slate-500 mb-4">Checklist assistant · not legal authority</p>
+        <div id="guidance" class="space-y-3 max-h-[280px] overflow-y-auto"></div>
+      </div>
+
+      <div class="glass rounded-xl p-5">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="font-semibold text-white text-sm">Autopsy Agent</h3>
+          <button onclick="runAutopsy()" class="text-[11px] px-2 py-1 rounded bg-slate-700 hover:bg-slate-600 text-slate-200">Run analysis</button>
+        </div>
+        <p class="text-[10px] text-amber-400/90 mb-2">Hypothesis only · requires forensic medical officer</p>
+        <div id="autopsy-panel" class="text-xs text-slate-400 space-y-2 max-h-[220px] overflow-y-auto">
+          <p class="text-slate-500">Click “Run analysis” to cross-reference post-mortem findings against the timeline.</p>
+        </div>
+      </div>
+
+      <div class="glass rounded-xl p-5">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="font-semibold text-white text-sm">Chargesheet QA</h3>
+          <button onclick="runChargesheetQA()" class="text-[11px] px-2 py-1 rounded bg-slate-700 hover:bg-slate-600 text-slate-200">Run QA</button>
+        </div>
+        <p class="text-[10px] text-slate-500 mb-2">Pre-filing checklist · not a verdict</p>
+        <div id="chargesheet-panel" class="text-xs text-slate-400 space-y-2 max-h-[220px] overflow-y-auto">
+          <p class="text-slate-500">Click “Run QA” for a consistency pass before filing.</p>
+        </div>
+      </div>
+
+      <div class="glass rounded-xl p-4 border border-accent/30">
+        <p class="text-xs text-slate-400 leading-relaxed">
+          <strong class="text-accent-soft">Principle:</strong> Every AI output carries a confidence score and explanation. 
+          Courts only see the <em>verified</em> record plus the transparent log of what the AI flagged and how officers responded.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Upload Modal -->
+  <div id="upload-modal" class="fixed inset-0 bg-black/70 z-50 hidden items-center justify-center p-4">
+    <div class="glass rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-semibold text-white">Log New Evidence</h3>
+        <button onclick="hideUploadModal()" class="text-slate-400 hover:text-white text-xl">&times;</button>
+      </div>
+      <form id="upload-form" class="space-y-3" onsubmit="submitEvidence(event)">
+        <div>
+          <label class="text-xs text-slate-400">Type</label>
+          <select name="evidence_type" class="w-full mt-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white">
+            <option value="statement">Witness Statement</option>
+            <option value="cctv">CCTV / Video</option>
+            <option value="photo">Photograph</option>
+            <option value="forensic">Forensic Report</option>
+            <option value="seizure">Seized Object</option>
+            <option value="autopsy">Autopsy / Post-Mortem</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs text-slate-400">Title</label>
+          <input name="title" required class="w-full mt-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="e.g. Statement of Suresh" />
+        </div>
+        <div>
+          <label class="text-xs text-slate-400">Content / Transcript / Notes</label>
+          <textarea name="raw_content" rows="4" class="w-full mt-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="Paste statement text, CCTV notes, or autopsy findings…"></textarea>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="text-xs text-slate-400">Officer ID</label>
+            <input name="officer_id" required value="OFF-DEL-1042" class="w-full mt-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white" />
+          </div>
+          <div>
+            <label class="text-xs text-slate-400">Officer Name</label>
+            <input name="officer_name" required value="SI Vikram Singh" class="w-full mt-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white" />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="text-xs text-slate-400">Witness / Custodian ID</label>
+            <input name="witness_id" value="WIT-002" class="w-full mt-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white" />
+          </div>
+          <div>
+            <label class="text-xs text-slate-400">Witness Name</label>
+            <input name="witness_name" value="Independent Witness" class="w-full mt-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white" />
+          </div>
+        </div>
+        <div>
+          <label class="text-xs text-slate-400">Collected At (ISO or local)</label>
+          <input name="collected_at" type="datetime-local" required class="w-full mt-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="text-xs text-slate-400">GPS Lat</label>
+            <input name="gps_lat" type="number" step="any" value="28.559" class="w-full mt-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white" />
+          </div>
+          <div>
+            <label class="text-xs text-slate-400">GPS Lng</label>
+            <input name="gps_lng" type="number" step="any" value="77.206" class="w-full mt-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white" />
+          </div>
+        </div>
+        <p class="text-xs text-slate-500">Two-person confirmation is recorded. SHA-256 hash chain will link this entry to the previous one.</p>
+        <button type="submit" class="w-full py-2.5 rounded-lg bg-accent hover:bg-blue-600 text-white font-medium transition">Hash &amp; Log Evidence</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 glass px-4 py-3 rounded-lg text-sm hidden z-50 shadow-xl"></div>
+
+  <script>
+    const API = 'http://127.0.0.1:8000';
+    let CASE_ID = 1;
+
+    async function api(path, opts = {}) {
+      const res = await fetch(API + path, opts);
+      if (!res.ok) throw new Error(await res.text());
+      return res.json();
+    }
+
+    function toast(msg, type = 'info') {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.className = `fixed bottom-6 right-6 glass px-4 py-3 rounded-lg text-sm z-50 shadow-xl ${type === 'error' ? 'border-red-500/50' : 'border-accent/50'}`;
+      el.classList.remove('hidden');
+      setTimeout(() => el.classList.add('hidden'), 3200);
+    }
+
+    function showUploadModal() {
+      document.getElementById('upload-modal').classList.remove('hidden');
+      document.getElementById('upload-modal').classList.add('flex');
+      // default time now
+      const now = new Date();
+      now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+      document.querySelector('[name=collected_at]').value = now.toISOString().slice(0, 16);
+    }
+    function hideUploadModal() {
+      document.getElementById('upload-modal').classList.add('hidden');
+      document.getElementById('upload-modal').classList.remove('flex');
+    }
+
+    async function loadDashboard() {
+      try {
+        const d = await api(`/api/cases/${CASE_ID}/dashboard`);
+        document.getElementById('case-title').textContent = d.case.title;
+        document.getElementById('case-number').textContent = d.case.case_number;
+        document.getElementById('case-desc').textContent = d.case.description || '';
+        document.getElementById('case-status').textContent = d.case.status;
+        const s = d.stats;
+        document.getElementById('stats-grid').innerHTML = `
+          <div class="bg-slate-900/80 rounded-lg p-2 text-center">
+            <div class="text-lg font-semibold text-white">${s.evidence_count}</div>
+            <div class="text-[10px] text-slate-500 uppercase">Evidence</div>
+          </div>
+          <div class="bg-slate-900/80 rounded-lg p-2 text-center">
+            <div class="text-lg font-semibold ${s.open_contradictions ? 'text-amber-400' : 'text-success'}">${s.open_contradictions}</div>
+            <div class="text-[10px] text-slate-500 uppercase">Open Flags</div>
+          </div>
+          <div class="bg-slate-900/80 rounded-lg p-2 text-center">
+            <div class="text-lg font-semibold ${s.chain_intact ? 'text-success' : 'text-danger'}">${s.chain_intact ? 'OK' : 'BROKEN'}</div>
+            <div class="text-[10px] text-slate-500 uppercase">Chain</div>
+          </div>`;
+        document.getElementById('status-dot').className = 'w-2 h-2 rounded-full bg-success';
+        document.getElementById('status-text').textContent = 'API Online';
+      } catch (e) {
+        document.getElementById('status-dot').className = 'w-2 h-2 rounded-full bg-danger';
+        document.getElementById('status-text').textContent = 'API Offline';
+      }
+    }
+
+    async function loadEvidence() {
+      const items = await api(`/api/cases/${CASE_ID}/evidence`);
+      const el = document.getElementById('evidence-list');
+      if (!items.length) { el.innerHTML = '<p class="text-sm text-slate-500">No evidence yet.</p>'; return; }
+      el.innerHTML = items.map(e => `
+        <div class="bg-slate-900/60 rounded-lg p-3 border border-slate-800 hover:border-slate-600 transition">
+          <div class="flex justify-between items-start gap-2">
+            <div>
+              <span class="chip bg-slate-700 text-slate-300">${e.evidence_type}</span>
+              <h4 class="text-sm font-medium text-white mt-1.5">${e.title}</h4>
+            </div>
+            <span class="chip ${e.is_verified ? 'bg-green-500/20 text-green-300' : 'bg-slate-700 text-slate-400'}">${e.is_verified ? 'Verified' : 'Pending'}</span>
+          </div>
+          <p class="text-xs text-slate-400 mt-2 line-clamp-2">${(e.raw_content || e.description || '').slice(0, 140)}…</p>
+          <div class="flex justify-between mt-2 text-[10px] text-slate-500 font-mono">
+            <span>${e.officer_name}</span>
+            <span title="${e.chain_hash}">⛓ ${e.chain_hash.slice(0, 10)}…</span>
+          </div>
+        </div>`).join('');
+    }
+
+    async function loadTimeline() {
+      const events = await api(`/api/cases/${CASE_ID}/timeline`);
+      const el = document.getElementById('timeline');
+      if (!events.length) { el.innerHTML = '<p class="text-sm text-slate-500">No timeline events.</p>'; return; }
+      el.innerHTML = `<div class="absolute left-1.5 top-1 bottom-1 w-0.5 timeline-line rounded"></div>` + events.map(ev => {
+        const t = ev.event_time ? new Date(ev.event_time).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }) : 'Unknown time';
+        return `
+        <div class="relative fade-in">
+          <div class="absolute -left-[18px] top-1 w-3 h-3 rounded-full ${ev.is_verified ? 'bg-success' : 'bg-accent'} border-2 border-ink-900"></div>
+          <div class="bg-slate-900/50 rounded-lg p-3 border border-slate-800">
+            <div class="flex justify-between items-start">
+              <span class="text-[10px] text-slate-500 font-mono">${t}</span>
+              <span class="chip ${ev.is_verified ? 'bg-green-500/15 text-green-300' : 'bg-blue-500/15 text-blue-300'}">${ev.is_verified ? 'Verified' : 'AI · ' + Math.round(ev.confidence * 100) + '%'}</span>
+            </div>
+            <h4 class="text-sm font-medium text-white mt-1">${ev.title}</h4>
+            <p class="text-xs text-slate-400 mt-1">${ev.description.slice(0, 180)}${ev.description.length > 180 ? '…' : ''}</p>
+            ${!ev.is_verified ? `<button onclick="verifyEvent(${ev.id})" class="mt-2 text-[11px] text-accent-soft hover:underline">Confirm as officer →</button>` : ''}
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    async function loadContradictions() {
+      const items = await api(`/api/cases/${CASE_ID}/contradictions`);
+      const open = items.filter(c => c.status === 'open');
+      document.getElementById('contra-count').textContent = `${open.length} open`;
+      const el = document.getElementById('contradictions');
+      if (!items.length) { el.innerHTML = '<p class="text-sm text-slate-500">No contradictions flagged.</p>'; return; }
+      el.innerHTML = items.map(c => {
+        const sev = c.severity === 'critical' ? 'severity-critical' : c.severity === 'high' ? 'severity-high' : 'severity-medium';
+        const statusColor = c.status === 'open' ? 'text-amber-300' : c.status === 'confirmed' ? 'text-red-300' : 'text-slate-400';
+        return `
+        <div class="bg-slate-900/60 rounded-lg p-3 ${sev} fade-in">
+          <div class="flex justify-between items-center mb-1">
+            <span class="chip bg-slate-800 text-slate-300 uppercase text-[10px]">${c.severity}</span>
+            <span class="text-[10px] ${statusColor}">${c.status} · ${Math.round(c.confidence * 100)}% conf</span>
+          </div>
+          <p class="text-sm text-slate-200">${c.description}</p>
+          <p class="text-xs text-slate-500 mt-1.5 italic">${c.ai_explanation || ''}</p>
+          ${c.status === 'open' ? `
+          <div class="flex gap-2 mt-3">
+            <button onclick="resolveContra(${c.id}, 'confirmed')" class="text-xs px-2.5 py-1 rounded bg-red-500/20 text-red-300 hover:bg-red-500/30">Confirm Issue</button>
+            <button onclick="resolveContra(${c.id}, 'dismissed')" class="text-xs px-2.5 py-1 rounded bg-slate-700 text-slate-300 hover:bg-slate-600">Dismiss</button>
+          </div>` : c.resolution_note ? `<p class="text-xs text-slate-500 mt-2">Note: ${c.resolution_note}</p>` : ''}
+        </div>`;
+      }).join('');
+    }
+
+    async function loadGuidance() {
+      const items = await api(`/api/cases/${CASE_ID}/guidance`);
+      const el = document.getElementById('guidance');
+      if (!items.length) { el.innerHTML = '<p class="text-sm text-slate-500">No guidance items.</p>'; return; }
+      const prioColor = { critical: 'text-red-400', high: 'text-amber-400', medium: 'text-blue-400' };
+      el.innerHTML = items.map(g => `
+        <div class="bg-slate-900/50 rounded-lg p-3 border border-slate-800">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-[10px] uppercase ${prioColor[g.priority] || 'text-slate-400'}">${g.priority}</span>
+            <span class="text-[10px] text-slate-600">·</span>
+            <span class="text-[10px] text-slate-500">${g.category}</span>
+          </div>
+          <h4 class="text-sm font-medium text-white">${g.title}</h4>
+          <p class="text-xs text-slate-400 mt-1">${g.description}</p>
+          ${g.legal_reference ? `<p class="text-[11px] text-accent-soft mt-1.5 font-mono">${g.legal_reference}</p>` : ''}
+          ${g.status === 'open' ? `<button onclick="ackGuidance(${g.id})" class="mt-2 text-[11px] text-slate-400 hover:text-white">Acknowledge →</button>` : '<span class="text-[10px] text-green-500/80 mt-1 inline-block">Acknowledged</span>'}
+        </div>`).join('');
+    }
+
+    async function loadChain() {
+      const r = await api(`/api/cases/${CASE_ID}/chain/verify`);
+      const badge = document.getElementById('chain-badge');
+      badge.textContent = r.valid ? 'Intact' : 'BROKEN';
+      badge.className = `chip ${r.valid ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300'}`;
+      document.getElementById('chain-msg').textContent = r.message;
+      document.getElementById('chain-hashes').innerHTML = (r.hashes || []).map(h =>
+        `<div>#${h.id}  content:${h.file_hash}  chain:${h.chain_hash}</div>`
+      ).join('');
+    }
+
+    async function verifyEvent(id) {
+      await api(`/api/timeline/${id}/verify?verified_by=SI%20Vikram%20Singh`, { method: 'POST' });
+      toast('Timeline event verified by officer');
+      loadTimeline();
+    }
+
+    async function resolveContra(id, status) {
+      const note = status === 'dismissed' ? prompt('Optional note for dismissal:') || 'Reviewed and dismissed' : prompt('Note for confirmation:') || 'Confirmed by officer review';
+      await api(`/api/contradictions/${id}/resolve`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status, resolved_by: 'SI Vikram Singh', resolution_note: note })
+      });
+      toast(`Contradiction ${status}`);
+      loadContradictions();
+      loadDashboard();
+    }
+
+    async function ackGuidance(id) {
+      await api(`/api/guidance/${id}/ack?by=SI%20Vikram%20Singh`, { method: 'POST' });
+      toast('Guidance acknowledged');
+      loadGuidance();
+    }
+
+    async function submitEvidence(e) {
+      e.preventDefault();
+      const form = e.target;
+      const fd = new FormData(form);
+      // Convert datetime-local to ISO
+      const dt = fd.get('collected_at');
+      if (dt) fd.set('collected_at', new Date(dt).toISOString());
+      try {
+        await fetch(`${API}/api/cases/${CASE_ID}/evidence`, { method: 'POST', body: fd });
+        toast('Evidence hashed and chained successfully');
+        hideUploadModal();
+        form.reset();
+        await refreshAll();
+      } catch (err) {
+        toast('Upload failed: ' + err.message, 'error');
+      }
+    }
+
+    async function runAutopsy() {
+      const el = document.getElementById('autopsy-panel');
+      el.innerHTML = '<p class="text-slate-500">Analyzing…</p>';
+      try {
+        const r = await api(`/api/cases/${CASE_ID}/autopsy-analysis`);
+        let html = `<p class="text-[10px] text-amber-300/90 mb-2">${r.label}</p>`;
+        (r.hypotheses || []).forEach(h => {
+          html += `<div class="bg-slate-900/60 rounded p-2 border border-slate-800">
+            <span class="text-[10px] uppercase text-slate-500">${h.type}</span>
+            <p class="text-slate-200 mt-0.5">${h.text}</p>
+            <span class="text-[10px] text-slate-500">${Math.round((h.confidence||0)*100)}% conf</span>
+          </div>`;
+        });
+        (r.warnings || []).forEach(w => {
+          html += `<p class="text-amber-400/90 text-[11px]">⚠ ${w}</p>`;
+        });
+        (r.consistency_checks || []).forEach(c => {
+          html += `<p class="text-[10px] text-slate-500">${c.check}: <span class="text-slate-300">${c.result}</span></p>`;
+        });
+        if (r.disclaimer) html += `<p class="text-[10px] text-slate-600 mt-2 italic">${r.disclaimer.slice(0,160)}…</p>`;
+        el.innerHTML = html;
+        toast('Autopsy analysis complete — review with medical officer');
+      } catch (e) {
+        el.innerHTML = `<p class="text-red-400">Failed: ${e.message}</p>`;
+      }
+    }
+
+    async function runChargesheetQA() {
+      const el = document.getElementById('chargesheet-panel');
+      el.innerHTML = '<p class="text-slate-500">Running QA…</p>';
+      try {
+        const r = await fetch(`${API}/api/cases/${CASE_ID}/chargesheet-qa`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({})
+        }).then(res => res.json());
+        const riskColor = r.overall_risk_level === 'high' || r.overall_risk_level === 'critical' ? 'text-red-400' : r.overall_risk_level === 'medium' ? 'text-amber-400' : 'text-green-400';
+        let html = `<p class="text-[10px] text-slate-500 mb-1">${r.label}</p>
+          <p class="mb-2">Risk: <span class="${riskColor} font-medium">${r.overall_risk_level}</span></p>`;
+        (r.risks || []).forEach(risk => {
+          html += `<div class="bg-slate-900/60 rounded p-2 border border-slate-800 mb-1">
+            <span class="text-[10px] uppercase ${risk.severity==='critical'?'text-red-400':risk.severity==='high'?'text-amber-400':'text-slate-400'}">${risk.severity}</span>
+            <p class="text-slate-200">${risk.issue}</p>
+            <p class="text-[10px] text-slate-500 mt-0.5">${risk.recommendation}</p>
+          </div>`;
+        });
+        if (r.checklist && r.checklist.length) {
+          html += `<p class="text-[10px] text-slate-500 mt-2 mb-1">Checklist</p><ul class="list-disc list-inside space-y-0.5">`;
+          r.checklist.slice(0, 6).forEach(item => { html += `<li class="text-slate-300">${item}</li>`; });
+          if (r.checklist.length > 6) html += `<li class="text-slate-500">+${r.checklist.length-6} more…</li>`;
+          html += `</ul>`;
+        }
+        el.innerHTML = html;
+        toast('Chargesheet QA complete — human legal review required');
+      } catch (e) {
+        el.innerHTML = `<p class="text-red-400">Failed: ${e.message}</p>`;
+      }
+    }
+
+    async function refreshAll() {
+      await Promise.all([loadDashboard(), loadEvidence(), loadTimeline(), loadContradictions(), loadGuidance(), loadChain()]);
+    }
+
+    // Boot
+    refreshAll();
+    setInterval(loadDashboard, 30000);
+  </script>
+</body>
+</html>
