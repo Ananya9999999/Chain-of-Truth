@@ -86,7 +86,7 @@ export function LocationAnalysis() {
                     />
                     <span
                       className={cn(
-                        'relative flex items-center justify-center rounded-full border transition-transform duration-300 hover:scale-110',
+                        'relative flex items-center justify-center rounded-full border transition-transform',
                         isSel && 'scale-110',
                       )}
                       style={{

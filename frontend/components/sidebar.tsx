@@ -27,7 +27,7 @@ export function Sidebar({
         </div>
       </div>
 
-      <nav className="flex-1 space-y-1 px-3 py-2">
+      <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-2">
         {navItems.map((item) => {
           const isActive = active === item.key
           return (
@@ -43,7 +43,7 @@ export function Sidebar({
               )}
             >
               {isActive && (
-                <span className="absolute top-1/2 left-0 h-6 w-0.5 -translate-y-1/2 rounded-full bg-primary transition-all duration-300 animate-fade-in" />
+                <span className="absolute top-1/2 left-0 h-6 w-0.5 -translate-y-1/2 rounded-full bg-primary" />
               )}
               <item.icon
                 className={cn(

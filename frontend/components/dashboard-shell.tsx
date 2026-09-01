@@ -11,12 +11,20 @@ import { AiFlagsPage } from '@/components/pages/ai-flags-page'
 import { LocationPage } from '@/components/pages/location-page'
 import { AuditPage } from '@/components/pages/audit-page'
 import { SettingsPage } from '@/components/pages/settings-page'
+import { GuidancePage } from '@/components/pages/guidance-page'
+import { AutopsyPage } from '@/components/pages/autopsy-page'
+import { ChargesheetPage } from '@/components/pages/chargesheet-page'
+import { ChainPage } from '@/components/pages/chain-page'
 
 const pages: Record<PageKey, React.ComponentType> = {
   overview: OverviewPage,
   evidence: EvidencePage,
   timeline: TimelinePage,
   'ai-flags': AiFlagsPage,
+  guidance: GuidancePage,
+  autopsy: AutopsyPage,
+  chargesheet: ChargesheetPage,
+  chain: ChainPage,
   location: LocationPage,
   audit: AuditPage,
   settings: SettingsPage,
@@ -32,7 +40,6 @@ export function DashboardShell() {
       <div className="flex min-w-0 flex-1 flex-col">
         <Header />
 
-        {/* Mobile / tablet nav — sidebar is hidden below lg */}
         <div className="border-b border-border bg-background px-5 py-2 lg:hidden">
           <label htmlFor="page-nav" className="sr-only">
             Select page
@@ -58,8 +65,8 @@ export function DashboardShell() {
 
           <footer className="mt-6 flex flex-wrap items-center justify-between gap-2 border-t border-border/60 pt-4 text-[11px] text-muted-foreground">
             <p>
-              Chain of Truth · Evidence Integrity System · Demo environment with
-              simulated case data
+              Chain of Truth · Evidence Integrity System · AI assists, humans
+              decide
             </p>
             <p className="font-mono">
               Verified record and AI working-analysis layer are kept distinct at

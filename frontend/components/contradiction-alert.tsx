@@ -43,7 +43,7 @@ export function ContradictionAlert() {
         )}
       />
 
-      <div className="btn-press flex items-start justify-between gap-4">
+      <div className="flex items-start justify-between gap-4">
         <div className="flex items-start gap-3">
           <div
             className={cn(
@@ -55,7 +55,7 @@ export function ContradictionAlert() {
                   : 'bg-warning/15 text-warning',
             )}
           >
-            <TriangleAlert className={cn('size-5', resolution === 'pending' && 'animate-pulse-soft')} />
+            <TriangleAlert className="size-5" />
           </div>
           <div>
             <h2 className="text-base font-semibold text-foreground">

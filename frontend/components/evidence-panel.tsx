@@ -30,8 +30,7 @@ export function EvidencePanel() {
           return (
             <div
               key={ev.id}
-              className="stagger-item hover-lift rounded-lg border border-border bg-card/40 p-3.5 transition-colors hover:border-border/80"
-              style={{ '--stagger-i': i } as React.CSSProperties}
+              className="stagger-item hover-lift rounded-lg border border-border bg-card/40 p-3.5 transition-colors hover:border-border/80" style={{ ['--stagger-i' as string]: i }}
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-start gap-3">

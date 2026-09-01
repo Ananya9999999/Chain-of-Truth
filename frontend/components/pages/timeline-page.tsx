@@ -27,7 +27,7 @@ export function TimelinePage() {
   ).length
 
   return (
-    <div className="page-enter space-y-5">
+    <div className="space-y-5">
       <PageHeader
         title="Case Timeline"
         description="A single chronological record. Verified facts and AI working-analysis events are interleaved by time but always visually distinct — the AI layer never merges into the verified record."

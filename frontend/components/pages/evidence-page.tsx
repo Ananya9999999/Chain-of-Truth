@@ -8,7 +8,7 @@ export function EvidencePage() {
   const confirmed = evidenceItems.filter((e) => e.twoPersonConfirmed).length
 
   return (
-    <div className="page-enter space-y-5">
+    <div className="space-y-5">
       <PageHeader
         title="Evidence"
         description="Every item is sealed with a SHA-256 hash and requires two-person confirmation before it enters the verified case record."

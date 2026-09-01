@@ -1,15 +1,33 @@
 'use client'
 
-import { Search, Bell, ChevronDown } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { Bell, Search, ChevronDown, LogOut } from 'lucide-react'
 import { caseMeta } from '@/lib/mock-data'
+import { clearSession, getSession, type OfficerSession } from '@/lib/auth'
 
 export function Header() {
+  const router = useRouter()
+  const [session, setSessionState] = useState<OfficerSession | null>(null)
+
+  useEffect(() => {
+    setSessionState(getSession())
+  }, [])
+
+  function logout() {
+    clearSession()
+    router.replace('/login')
+  }
+
+  const name = session?.fullName || caseMeta.officer
+  const role = session?.role || caseMeta.role
+  const initials = session?.initials || 'AM'
+
   return (
-    <header className="sticky top-0 z-20 flex h-16 items-center gap-4 border-b border-border bg-background/80 px-5 backdrop-blur-md">
-      <div className="flex items-center gap-3">
+    <header className="flex h-14 shrink-0 items-center gap-3 border-b border-border bg-background/80 px-5 backdrop-blur-md">
+      <div className="flex items-center gap-2">
         <button className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-1.5 text-sm transition-colors hover:bg-secondary">
-          <span className="font-mono text-xs text-muted-foreground">Case</span>
-          <span className="font-mono text-sm font-semibold text-foreground">
+          <span className="font-mono text-xs text-muted-foreground">
             #{caseMeta.id}
           </span>
           <ChevronDown className="size-3.5 text-muted-foreground" />
@@ -35,16 +53,23 @@ export function Header() {
           <span className="absolute top-2 right-2 size-1.5 rounded-full bg-warning" />
         </button>
 
-        <div className="flex items-center gap-2.5 rounded-lg border border-border bg-card py-1 pr-3 pl-1.5">
+        <div className="flex items-center gap-2.5 rounded-lg border border-border bg-card py-1 pr-2 pl-1.5">
           <div className="flex size-7 items-center justify-center rounded-md bg-primary/15 font-mono text-xs font-semibold text-primary">
-            AM
+            {initials}
           </div>
           <div className="hidden leading-tight sm:block">
-            <p className="text-xs font-semibold text-foreground">
-              {caseMeta.officer}
-            </p>
-            <p className="text-[10px] text-muted-foreground">{caseMeta.role}</p>
+            <p className="text-xs font-semibold text-foreground">{name}</p>
+            <p className="text-[10px] text-muted-foreground">{role}</p>
           </div>
+          <button
+            type="button"
+            onClick={logout}
+            aria-label="Sign out"
+            title="Sign out"
+            className="btn-press ml-1 flex size-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+          >
+            <LogOut className="size-3.5" />
+          </button>
         </div>
       </div>
     </header>

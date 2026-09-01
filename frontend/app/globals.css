@@ -139,172 +139,72 @@
   }
 }
 
-/* ── Motion system (keeps tw-animate-css; adds page/list/timeline motion) ── */
-
+/* ── Motion system ── */
 @keyframes cot-fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes cot-fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
-
 @keyframes cot-slide-in-left {
-  from {
-    opacity: 0;
-    transform: translateX(-16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(-16px); }
+  to { opacity: 1; transform: translateX(0); }
 }
-
 @keyframes cot-scale-in {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
 }
-
 @keyframes cot-draw-line {
-  from {
-    transform: scaleY(0);
-  }
-  to {
-    transform: scaleY(1);
-  }
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
 }
-
 @keyframes cot-pulse-soft {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.55;
-  }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
 }
-
-@keyframes cot-shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
 @keyframes cot-pop {
-  0% {
-    transform: scale(0.92);
-    opacity: 0;
-  }
-  70% {
-    transform: scale(1.02);
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+  0% { transform: scale(0.92); opacity: 0; }
+  70% { transform: scale(1.02); }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 @layer utilities {
-  .animate-fade-up {
-    animation: cot-fade-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-
-  .animate-fade-in {
-    animation: cot-fade-in 0.35s ease-out both;
-  }
-
-  .animate-slide-in-left {
-    animation: cot-slide-in-left 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-
-  .animate-scale-in {
-    animation: cot-scale-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-
-  .animate-pop {
-    animation: cot-pop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-
-  .animate-pulse-soft {
-    animation: cot-pulse-soft 2s ease-in-out infinite;
-  }
-
-  /* Stagger children: set --stagger-i on each child (0, 1, 2…) */
+  .animate-fade-up { animation: cot-fade-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .animate-fade-in { animation: cot-fade-in 0.35s ease-out both; }
+  .animate-slide-in-left { animation: cot-slide-in-left 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .animate-scale-in { animation: cot-scale-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .animate-pop { animation: cot-pop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .animate-pulse-soft { animation: cot-pulse-soft 2s ease-in-out infinite; }
   .stagger-item {
     animation: cot-fade-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
     animation-delay: calc(var(--stagger-i, 0) * 55ms);
   }
-
   .timeline-rail {
     transform-origin: top center;
     animation: cot-draw-line 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
-
-  .page-enter {
-    animation: cot-fade-up 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-
+  .page-enter { animation: cot-fade-up 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
   .hover-lift {
-    transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease,
-      border-color 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   }
-
   .hover-lift:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 28px -14px oklch(0 0 0 / 55%);
   }
-
   .btn-press {
-    transition:
-      transform 0.12s ease,
-      background-color 0.15s ease,
-      border-color 0.15s ease;
+    transition: transform 0.12s ease, background-color 0.15s ease, border-color 0.15s ease;
   }
-
-  .btn-press:active {
-    transform: scale(0.97);
-  }
+  .btn-press:active { transform: scale(0.97); }
 
   @media (prefers-reduced-motion: reduce) {
-    .animate-fade-up,
-    .animate-fade-in,
-    .animate-slide-in-left,
-    .animate-scale-in,
-    .animate-pop,
-    .stagger-item,
-    .timeline-rail,
-    .page-enter,
-    .animate-pulse-soft {
+    .animate-fade-up, .animate-fade-in, .animate-slide-in-left, .animate-scale-in,
+    .animate-pop, .stagger-item, .timeline-rail, .page-enter, .animate-pulse-soft {
       animation: none !important;
       opacity: 1 !important;
       transform: none !important;
     }
-
-    .hover-lift:hover {
-      transform: none;
-    }
+    .hover-lift:hover { transform: none; }
   }
 }
