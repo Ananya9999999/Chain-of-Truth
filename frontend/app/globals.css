@@ -308,3 +308,234 @@
     }
   }
 }
+
+
+/* =========================================================
+   CHAIN OF TRUTH — HIGH IMPACT MOTION / FORENSIC UI LAYER
+   ========================================================= */
+
+:root {
+  --cot-glow: oklch(0.68 0.13 235 / 0.16);
+  --cot-glow-strong: oklch(0.68 0.13 235 / 0.28);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.cot-app {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 78% 12%, oklch(0.68 0.13 235 / 0.055), transparent 25rem),
+    radial-gradient(circle at 30% 75%, oklch(0.55 0.08 255 / 0.035), transparent 30rem),
+    var(--background);
+}
+
+.cot-app::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  opacity: .3;
+  background-image:
+    linear-gradient(oklch(1 0 0 / .025) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(1 0 0 / .025) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(to bottom, black, transparent 90%);
+}
+
+.cot-app::after {
+  content: '';
+  position: fixed;
+  inset: -20%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(circle, var(--cot-glow), transparent 28%);
+  filter: blur(70px);
+  opacity: .35;
+  animation: cot-ambient 10s ease-in-out infinite;
+}
+
+@keyframes cot-ambient {
+  0%, 100% { transform: translate3d(-4%, -2%, 0) scale(.9); opacity: .22; }
+  50% { transform: translate3d(5%, 4%, 0) scale(1.08); opacity: .4; }
+}
+
+.cot-sidebar {
+  box-shadow: 12px 0 40px -30px var(--cot-glow-strong);
+  backdrop-filter: blur(18px);
+  z-index: 30;
+}
+
+.cot-sidebar::after {
+  content: '';
+  position: absolute;
+  top: 8%;
+  right: -1px;
+  width: 1px;
+  height: 84%;
+  background: linear-gradient(transparent, var(--cot-glow-strong), transparent);
+  animation: cot-rail-pulse 4s ease-in-out infinite;
+}
+
+@keyframes cot-rail-pulse {
+  0%, 100% { opacity: .25; }
+  50% { opacity: .8; }
+}
+
+.cot-nav-item {
+  overflow: hidden;
+}
+
+.cot-nav-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent, oklch(1 0 0 / .05), transparent);
+  transform: translateX(-120%);
+}
+
+.cot-nav-item:hover::after {
+  animation: cot-nav-scan .7s ease;
+}
+
+@keyframes cot-nav-scan {
+  to { transform: translateX(120%); }
+}
+
+.cot-nav-item:hover svg {
+  transform: scale(1.1) rotate(-4deg);
+}
+
+.cot-nav-item svg {
+  transition: transform .25s cubic-bezier(.16,1,.3,1), color .2s ease;
+}
+
+.cot-header {
+  box-shadow: 0 12px 40px -30px black;
+}
+
+.cot-header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cot-glow-strong), transparent);
+  animation: cot-header-scan 5s linear infinite;
+}
+
+@keyframes cot-header-scan {
+  0% { opacity: .15; transform: scaleX(.35); }
+  50% { opacity: .8; transform: scaleX(1); }
+  100% { opacity: .15; transform: scaleX(.35); }
+}
+
+.cot-search input:focus {
+  box-shadow: 0 0 0 3px var(--cot-glow), 0 12px 35px -22px var(--cot-glow-strong);
+  transform: translateY(-1px);
+}
+
+.cot-main > .page-enter > * > * {
+  transform-origin: center top;
+}
+
+/* Every primary card gets a restrained interactive lift. */
+.cot-main .glass-card,
+.cot-main [data-slot='card'] {
+  position: relative;
+  overflow: hidden;
+  transition: transform .28s cubic-bezier(.16,1,.3,1), box-shadow .28s ease, border-color .28s ease;
+}
+
+.cot-main .glass-card::before,
+.cot-main [data-slot='card']::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 45%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cot-glow-strong), transparent);
+  pointer-events: none;
+}
+
+.cot-main .glass-card:hover,
+.cot-main [data-slot='card']:hover {
+  transform: translateY(-3px);
+  border-color: oklch(0.68 0.13 235 / .25);
+  box-shadow: 0 18px 50px -32px var(--cot-glow-strong), 0 1px 0 white inset;
+}
+
+.cot-main .glass-card:hover::before,
+.cot-main [data-slot='card']:hover::before {
+  animation: cot-card-scan 1s ease;
+}
+
+@keyframes cot-card-scan {
+  from { left: -80%; }
+  to { left: 140%; }
+}
+
+/* Evidence rows feel like live forensic records. */
+.cot-main .stagger-item:hover {
+  border-color: oklch(0.68 0.13 235 / .3);
+}
+
+.cot-main button {
+  will-change: transform;
+}
+
+.cot-main button:focus-visible,
+.cot-header button:focus-visible,
+.cot-sidebar button:focus-visible {
+  outline: 2px solid oklch(0.68 0.13 235 / .55);
+  outline-offset: 2px;
+}
+
+/* AI items receive a quiet breathing signal. */
+.cot-main .bg-primary\/\[0\.04\] {
+  animation: cot-ai-breathe 3.5s ease-in-out infinite;
+}
+
+@keyframes cot-ai-breathe {
+  0%, 100% { box-shadow: inset 0 0 0 1px transparent; }
+  50% { box-shadow: inset 0 0 28px -24px var(--cot-glow-strong); }
+}
+
+/* Timeline nodes get a forensic pulse without being distracting. */
+.cot-main .timeline-rail + div {
+  transition: transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s ease;
+}
+
+.cot-main li:hover .timeline-rail + div {
+  transform: translateX(4px);
+}
+
+/* Status badges pop when their row is revealed. */
+.cot-main .animate-pop {
+  animation-duration: .55s;
+}
+
+@media (max-width: 1023px) {
+  .cot-app::before { background-size: 34px 34px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .cot-app::after,
+  .cot-sidebar::after,
+  .cot-header::after,
+  .cot-main .glass-card::before,
+  .cot-main [data-slot='card']::before,
+  .cot-main .bg-primary\/\[0\.04\] {
+    animation: none !important;
+  }
+}

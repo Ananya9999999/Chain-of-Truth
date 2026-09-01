@@ -12,7 +12,7 @@ export function Sidebar({
   onNavigate: (key: PageKey) => void
 }) {
   return (
-    <aside className="animate-slide-in-left hidden w-64 shrink-0 flex-col border-r border-sidebar-border bg-sidebar lg:flex">
+    <aside className="cot-sidebar animate-slide-in-left sticky top-0 hidden h-screen w-64 shrink-0 flex-col border-r border-sidebar-border bg-sidebar lg:flex">
       <div className="flex items-center gap-2.5 px-5 py-5">
         <div className="flex size-9 items-center justify-center rounded-lg bg-primary/15 ring-1 ring-primary/30">
           <ShieldCheck className="size-5 text-primary" />
@@ -36,7 +36,7 @@ export function Sidebar({
               onClick={() => onNavigate(item.key)}
               aria-current={isActive ? 'page' : undefined}
               className={cn(
-                'group relative flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 btn-press',
+                'cot-nav-item group relative flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 btn-press',
                 isActive
                   ? 'bg-sidebar-accent text-sidebar-foreground'
                   : 'text-muted-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-foreground',
