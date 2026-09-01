@@ -21,8 +21,12 @@
 
 ## Screenshots
 
-> Images live in [`docs/screenshots/`](docs/screenshots/). That folder's README
-> lists the exact filenames these tags expect.
+> **Add 16 PNGs to [`docs/screenshots/`](docs/screenshots/)** using the exact
+> filenames listed in that folder's README, and the gallery below fills in.
+> Until then the image slots render empty.
+
+<details>
+<summary><b>Open the screenshot gallery</b> (16 views)</summary>
 
 | | |
 | :--: | :--: |
@@ -34,6 +38,8 @@
 | ![Digital Correlation](docs/screenshots/11-digital-correlation.png) <br> **Digital Correlation** | ![Case Similarity](docs/screenshots/12-case-similarity.png) <br> **Case Similarity** |
 | ![Review Queue](docs/screenshots/13-review-queue.png) <br> **Human Verification** | ![Closure Readiness](docs/screenshots/14-closure-readiness.png) <br> **Closure Readiness** |
 | ![Chargesheet QA](docs/screenshots/15-chargesheet-qa.png) <br> **Chargesheet QA** | ![Audit Trail](docs/screenshots/16-audit-trail.png) <br> **Audit Trail** |
+
+</details>
 
 ---
 
@@ -306,5 +312,3 @@ complements the data backbone rather than competing with it.
 ## License
 
 MIT — see [LICENSE](LICENSE).
-#   C h a i n _ o f _ t r u t h  
- 
