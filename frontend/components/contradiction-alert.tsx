@@ -23,7 +23,7 @@ export function ContradictionAlert() {
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-xl border p-5 transition-colors',
+        'animate-pop relative overflow-hidden rounded-xl border p-5 transition-all duration-300',
         confirmed
           ? 'border-danger/40 bg-danger/[0.06]'
           : resolution === 'dismissed'
@@ -43,7 +43,7 @@ export function ContradictionAlert() {
         )}
       />
 
-      <div className="flex items-start justify-between gap-4">
+      <div className="btn-press flex items-start justify-between gap-4">
         <div className="flex items-start gap-3">
           <div
             className={cn(
@@ -55,7 +55,7 @@ export function ContradictionAlert() {
                   : 'bg-warning/15 text-warning',
             )}
           >
-            <TriangleAlert className="size-5" />
+            <TriangleAlert className={cn('size-5', resolution === 'pending' && 'animate-pulse-soft')} />
           </div>
           <div>
             <h2 className="text-base font-semibold text-foreground">

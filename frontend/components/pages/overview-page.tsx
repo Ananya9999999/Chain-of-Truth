@@ -9,18 +9,32 @@ import { AuditTrail } from '@/components/audit-trail'
 export function OverviewPage() {
   return (
     <div className="space-y-5">
-      <CaseHeader />
-      <ContradictionAlert />
+      <div className="stagger-item" style={{ ['--stagger-i' as string]: 0 }}>
+        <CaseHeader />
+      </div>
+      <div className="stagger-item" style={{ ['--stagger-i' as string]: 1 }}>
+        <ContradictionAlert />
+      </div>
 
       <div className="grid gap-5 xl:grid-cols-3">
         <div className="space-y-5 xl:col-span-2">
-          <CaseTimeline />
-          <LocationAnalysis />
+          <div className="stagger-item" style={{ ['--stagger-i' as string]: 2 }}>
+            <CaseTimeline />
+          </div>
+          <div className="stagger-item" style={{ ['--stagger-i' as string]: 3 }}>
+            <LocationAnalysis />
+          </div>
         </div>
         <div className="space-y-5">
-          <EvidencePanel />
-          <AiTransparency />
-          <AuditTrail />
+          <div className="stagger-item" style={{ ['--stagger-i' as string]: 2 }}>
+            <EvidencePanel />
+          </div>
+          <div className="stagger-item" style={{ ['--stagger-i' as string]: 3 }}>
+            <AiTransparency />
+          </div>
+          <div className="stagger-item" style={{ ['--stagger-i' as string]: 4 }}>
+            <AuditTrail />
+          </div>
         </div>
       </div>
     </div>

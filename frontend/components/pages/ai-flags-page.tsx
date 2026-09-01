@@ -44,7 +44,7 @@ export function AiFlagsPage() {
   const pending = Object.values(responses).filter((r) => r === 'pending').length
 
   return (
-    <div className="space-y-5">
+    <div className="page-enter space-y-5">
       <PageHeader
         title="AI Flags"
         description="Contradictions and hypotheses surfaced by the analysis layer. Each is a labelled hypothesis outside the verified record until an officer confirms or dismisses it."

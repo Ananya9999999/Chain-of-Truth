@@ -25,12 +25,13 @@ export function EvidencePanel() {
         </button>
       </CardHeader>
       <CardContent className="space-y-2.5">
-        {evidenceItems.map((ev) => {
+        {evidenceItems.map((ev, i) => {
           const Icon = typeIcon[ev.type] ?? FileText
           return (
             <div
               key={ev.id}
-              className="rounded-lg border border-border bg-card/40 p-3.5 transition-colors hover:border-border/80"
+              className="stagger-item hover-lift rounded-lg border border-border bg-card/40 p-3.5 transition-colors hover:border-border/80"
+              style={{ '--stagger-i': i } as React.CSSProperties}
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-start gap-3">

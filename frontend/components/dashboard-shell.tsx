@@ -52,7 +52,9 @@ export function DashboardShell() {
         </div>
 
         <main className="mx-auto w-full max-w-[1400px] flex-1 p-5 lg:p-6">
-          <ActivePage />
+          <div key={active} className="page-enter">
+            <ActivePage />
+          </div>
 
           <footer className="mt-6 flex flex-wrap items-center justify-between gap-2 border-t border-border/60 pt-4 text-[11px] text-muted-foreground">
             <p>

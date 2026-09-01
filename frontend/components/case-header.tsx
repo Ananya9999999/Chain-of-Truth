@@ -18,7 +18,7 @@ function Stat({
     primary: 'text-primary',
   }
   return (
-    <div className="flex items-center gap-3 rounded-lg border border-border bg-card/60 px-4 py-3">
+    <div className="hover-lift flex items-center gap-3 rounded-lg border border-border bg-card/60 px-4 py-3">
       <Icon className={`size-4 ${toneMap[tone]}`} />
       <div className="leading-tight">
         <p className={`font-mono text-xl font-semibold ${toneMap[tone]}`}>
@@ -32,7 +32,7 @@ function Stat({
 
 export function CaseHeader() {
   return (
-    <div className="glass-card rounded-xl p-5">
+    <div className="glass-card animate-fade-up rounded-xl p-5">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <div className="flex items-center gap-2.5">
