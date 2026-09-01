@@ -22,14 +22,14 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (getSession()) {
-      router.replace('/')
+      router.replace('/dashboard')
     }
   }, [router])
 
   function loginAs(officer: OfficerSession) {
     setLoading(true)
     setSession(officer)
-    router.replace('/')
+    router.replace('/dashboard')
   }
 
   function onSubmit(e: React.FormEvent) {

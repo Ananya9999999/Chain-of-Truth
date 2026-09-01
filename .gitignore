@@ -1,36 +1,54 @@
-# Virtual environments
+# ── Python ───────────────────────────────────────────────────────────────────
 .venv/
 venv/
 env/
-
-# Python
 __pycache__/
 *.py[cod]
 *.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
 
-# Local database and uploaded evidence (generated at runtime)
+# ── Node / Next.js ───────────────────────────────────────────────────────────
+node_modules/
+.next/
+out/
+dist/
+.vite/
+*.tsbuildinfo
+
+# ── Environment & secrets (NEVER commit) ─────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.env.local
+backend/keys/
+*.pem
+*.key
+
+# ── Runtime data: local DB and uploaded evidence ─────────────────────────────
 *.db
 *.db-wal
 *.db-shm
 backend/storage/
+storage/
+!storage/.gitkeep
 
-# Test and tooling caches
-.pytest_cache/
-.coverage
-htmlcov/
-
-# Editors / OS
+# ── Editors / OS ─────────────────────────────────────────────────────────────
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
-<<<<<<< HEAD
-.env 
-*.env.local
-node_modules/
-dist/
-.vite/
-storage/*
-.vscode/*
-=======
->>>>>>> origin/main
+
+# ── Vercel / v0 sandbox artefacts ────────────────────────────────────────────
+.vercel/
+.snowflake/
+.v0-trash/
+__v0_runtime_loader.js
+__v0_devtools.tsx
+__v0_jsx-dev-runtime.ts
+
+# Superseded pnpm artefacts, kept locally only as a rollback path
+*.bak

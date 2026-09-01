@@ -1,0 +1,78 @@
+# Chain of Truth — local development infrastructure
+#
+#   docker compose -f docker/docker-compose.yml up -d
+#
+# Every value below has a safe development default, so this stack comes up even
+# before you create a .env file. Override anything via the repo-root .env.
+name: chain-of-truth
+
+services:
+  # ── PostgreSQL 16 with pgvector already compiled in ────────────────────────
+  # Using the pgvector image (not plain postgres) means the vector extension is
+  # present at first boot; there is nothing to compile by hand.
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: cot-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-cot}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cot_dev_password}
+      POSTGRES_DB: ${POSTGRES_DB:-chain_of_truth}
+      # Deterministic collation so ORDER BY is stable across machines.
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - cot_pgdata:/var/lib/postgresql/data
+      # Runs once, on an empty data directory, in filename order.
+      - ./postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test:
+        ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-cot} -d ${POSTGRES_DB:-chain_of_truth}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+  # ── MinIO — S3-compatible object storage for evidence files ───────────────
+  minio:
+    image: minio/minio:latest
+    container_name: cot-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-cot_minio_admin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-cot_minio_dev_password}
+    ports:
+      - "${MINIO_PORT:-9000}:9000"      # S3 API
+      - "${MINIO_CONSOLE_PORT:-9001}:9001"  # Web console
+    volumes:
+      - cot_miniodata:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+  # ── One-shot: create the evidence bucket, then exit ───────────────────────
+  minio-init:
+    image: minio/mc:latest
+    container_name: cot-minio-init
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set cot http://minio:9000 '${MINIO_ROOT_USER:-cot_minio_admin}' '${MINIO_ROOT_PASSWORD:-cot_minio_dev_password}' &&
+      mc mb --ignore-existing cot/${S3_BUCKET:-evidence} &&
+      mc version enable cot/${S3_BUCKET:-evidence} &&
+      echo 'bucket ${S3_BUCKET:-evidence} ready (versioning on)'
+      "
+    restart: "no"
+
+volumes:
+  cot_pgdata:
+    name: cot_pgdata
+  cot_miniodata:
+    name: cot_miniodata

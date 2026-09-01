@@ -1,403 +1,308 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-# Chain of Truth — Part 3 + Part 5 package
-
-**Part 3:** Investigation Guidance Agent · Autopsy Agent · Chargesheet QA Agent · curated BNS/CrPC KB  
-**Part 5:** RBAC helpers · Security model · Integration guide · Live demo script · Demo UI
-
-Drop these files into the existing **Part 1** backend (`Chain-of-Truth-main`).
-
-## Quick integrate
-
-See **`docs/INTEGRATION.md`**.
-
-```bash
-cp backend/app/services/ai_engine.py   <part1-repo>/backend/app/services/
-cp backend/app/api/routes_agents.py    <part1-repo>/backend/app/api/
-cp backend/app/api/deps_rbac.py        <part1-repo>/backend/app/api/
-# then mount routes_agents.router in main.py (one include_router line)
-```
-
-## API surface (after mount under `/api`)
-
-| Method | Path | Purpose |
-|--------|------|---------|
-| GET | `/api/cases/{id}/guidance` | Investigation checklist (BNS/CrPC grounded) |
-| GET | `/api/cases/{id}/autopsy-analysis` | Autopsy hypotheses (medical review required) |
-| POST | `/api/cases/{id}/chargesheet-qa` | Pre-filing QA checklist |
-| GET | `/api/cases/{id}/analysis` | Timeline + contradictions + guidance |
-| GET | `/api/legal-kb` | Transparency: curated legal KB |
-
-All AI responses carry explicit **unverified / hypothesis** labels.
-
-## Principle
-
-> AI assists. Humans decide.  
-> Courts only see the verified record + the log of AI flags and officer responses.
-
-## Docs
-
-- `docs/INTEGRATION.md` — how to wire into Part 1  
-- `docs/DEMO_SCRIPT.md` — 3–4 min live demo + judge Q&A  
-- `docs/SECURITY.md` — RBAC, encryption, trust boundary  
-=======
 # Chain of Truth
 
 **An AI-assisted evidence integrity and investigation system for police and judiciary.**
 
-When a crime happens, evidence arrives scattered — a photo here, a witness
-statement there, a forensic report weeks later, often logged by different
-officers who never cross-reference each other's work. Cases collapse in court on
-technicalities that have nothing to do with guilt or innocence.
+> **AI assists. Humans decide.**
+> The AI never makes a legal determination, never files anything, and is never
+> treated as ground truth.
 
-Chain of Truth is a case-management platform where every piece of evidence is
-logged the moment it is collected, permanently and verifiably timestamped, with
-an AI layer on top that reads it, connects it, and catches contradictions —
-while **every AI output stays a suggestion for a human to verify, never an
-automatic decision**.
+<!-- ─────────────────────────────────────────────────────────────────────────
+     FILL THESE IN BEFORE SUBMITTING — replace the placeholder text only.
+     ───────────────────────────────────────────────────────────────────────── -->
 
-> AI assists investigators. It does not determine guilt.
-> All conclusions require human verification.
+| | |
+| --- | --- |
+| **Live demo** | _paste deployed URL here_ |
+| **Demo video** | _paste video link here (YouTube / Drive / Loom)_ |
+| **Repository** | https://github.com/lisamehta0791/Chain_of_truth |
+| **Team** | Byte Me |
 
 ---
 
-## What is in this repository
+## Screenshots
 
-This repo contains **Part 1 — the Backend & Tamper-Proof Ledger**: the evidence
-integrity layer everything else is built on.
+> Images live in [`docs/screenshots/`](docs/screenshots/). That folder's README
+> lists the exact filenames these tags expect.
 
-| Feature | What it does |
-| --- | --- |
-| **Evidence upload API** | Files and text statements, hashed on arrival |
-| **SHA-256 hash chain** | Each entry commits to the previous one, so editing history is mathematically detectable |
-| **Two-person confirmation** | Collecting officer + witnessing officer, enforced with Ed25519 signatures |
-| **Locked device metadata** | Capture GPS / device ID / timestamp frozen at upload and cross-checked against the officer's logged shift |
-| **Audit trail** | Every view and access is logged, not just edits — and the log is itself hash-chained |
-| **Offline-first sync** | Log evidence with no connectivity; original timestamps and hashes survive the sync |
-
-There is **deliberately no AI in this layer**. Tamper-proofing is cryptographic
-hashing, which needs to be deterministic and provably reliable rather than
-probabilistic.
-
-**113 automated tests**, including tests that actively tamper with the database
-and assert the system catches it.
-=======
-# Chain of Truth
-
-**AI assists investigators. It does not determine guilt.**
-
-When a crime occurs, evidence arrives piecemeal — a photo from one officer, a witness statement from another, a forensic report weeks later — often logged by people who never compare notes. Cases collapse in court on technicalities unrelated to actual guilt or innocence.
-
-India already has strong digitization systems (**CCTNS**, **ICJS**). They are excellent systems of record. They store what is entered; they do not read it, cross-reference it, or surface contradictions as a case develops.
-
-**Chain of Truth** is the active reasoning layer on top — not a replacement for government infrastructure.
-
-> Every AI output is a suggestion. A human officer must confirm or dismiss it before it enters the official case record. Courts only ever see the verified record, plus a transparent log of what the AI flagged and how officers responded.
+| | |
+| :--: | :--: |
+| ![Landing](docs/screenshots/01-landing.png) <br> **Landing** | ![Command Center](docs/screenshots/02-command-center.png) <br> **Command Center** |
+| ![Evidence Vault](docs/screenshots/03-evidence-vault.png) <br> **Evidence Vault** | ![Case Timeline](docs/screenshots/04-case-timeline.png) <br> **Case Timeline** |
+| ![Evidence Graph](docs/screenshots/05-evidence-graph.png) <br> **Evidence Graph** | ![Forensic Map](docs/screenshots/06-forensic-map.png) <br> **Forensic Map** |
+| ![Autopsy 3D](docs/screenshots/07-autopsy-3d.png) <br> **Autopsy Cross-Check (3D)** | ![Investigation Guidance](docs/screenshots/08-investigation-guidance.png) <br> **Investigation Guidance** |
+| ![Evidence Gaps](docs/screenshots/09-evidence-gaps.png) <br> **Evidence Gaps** | ![Statement Reliability](docs/screenshots/10-statement-reliability.png) <br> **Statement Reliability** |
+| ![Digital Correlation](docs/screenshots/11-digital-correlation.png) <br> **Digital Correlation** | ![Case Similarity](docs/screenshots/12-case-similarity.png) <br> **Case Similarity** |
+| ![Review Queue](docs/screenshots/13-review-queue.png) <br> **Human Verification** | ![Closure Readiness](docs/screenshots/14-closure-readiness.png) <br> **Closure Readiness** |
+| ![Chargesheet QA](docs/screenshots/15-chargesheet-qa.png) <br> **Chargesheet QA** | ![Audit Trail](docs/screenshots/16-audit-trail.png) <br> **Audit Trail** |
 
 ---
 
-## What's included
+## The problem
 
-| Layer | Capability |
+When a crime happens, evidence arrives scattered — a photo here, a witness statement
+there, a forensic report weeks later, often logged by different officers who never
+cross-reference each other's work. Cases collapse in court on technicalities that have
+nothing to do with guilt or innocence. India's CCTNS and ICJS digitize records, but
+neither *reasons* over the evidence to catch gaps and contradictions as a case builds.
+
+Chain of Truth is a case-management platform where every piece of evidence is logged the
+moment it is collected, permanently and verifiably timestamped, with an AI layer on top
+that reads it, connects it, and catches contradictions — while every AI output stays a
+suggestion for a human to verify, never an automatic decision.
+
+---
+
+## The core principle, expressed as architecture
+
+This is not a slogan bolted onto a dashboard. It is enforced in three places:
+
+| Layer | How the principle is enforced |
 | --- | --- |
-| **Part 1 — Integrity** | Evidence upload, SHA-256 hash chain, two-person confirmation (Ed25519), locked device metadata, audit trail on every access, offline-first sync |
-| **Part 3 — AI agents** | Timeline candidates, contradiction detector, investigation guidance (curated BNS/CrPC KB), autopsy hypothesis agent, chargesheet pre-filing QA |
-| **Part 5 — Security & demo** | RBAC helpers (officer / supervisor / forensic / legal), security model, live demo script, judge Q&A |
-| **Frontend** | Next.js dashboard (timeline, evidence, contradictions, guidance, location, audit) |
-| **Tests** | 100+ automated tests including adversarial tamper checks |
+| **Database** | AI output and verified facts live in **physically separate tables**. An extracted fact cannot be read by a query against the verified record until a human writes a `verification_decisions` row promoting it. |
+| **Service** | `services/analysis.py` can only write to the AI layer. Only `services/verification.py`, driven by a human action, can promote anything. The asymmetry is structural, not conventional. |
+| **UI** | Six status chips (`VERIFIED`, `AI-EXTRACTED · UNVERIFIED`, `AI HYPOTHESIS`, `HUMAN-CONFIRMED`, `DISMISSED`, `REQUIRES REVIEW`) each carry an icon and a word, never colour alone. Every AI finding renders beside the exact source text it came from. |
 
-Tamper-proofing is **cryptographic**, not probabilistic. AI never files, never auto-confirms, and never becomes ground truth.
->>>>>>> origin/main
+Dismissing a flag never deletes it. A court sees both what the machine noticed and what
+the officer decided about it — that is the due-diligence log the system is built to
+produce.
+
+---
+
+## Architecture
+
+```
+frontend/  Next.js 16 · React 19 · TypeScript · Tailwind v4 (dark + light) · Motion · R3F
+backend/   FastAPI · SQLAlchemy 2.0 · deterministic + pluggable AI · RAG over pgvector
+docker/    PostgreSQL 16 + pgvector · MinIO (S3-compatible object storage)
+docs/      Setup, security, demo script, integration notes
+scripts/   PowerShell helpers for the local stack
+```
+
+### Tech stack
+
+| Layer | Choice | Why |
+| --- | --- | --- |
+| Frontend | Next.js 16 (App Router), React 19, TypeScript | Route-level code splitting keeps 3D and map chunks out of the initial load |
+| Styling | Tailwind CSS v4 · dark + light themes | Design tokens from the Stitch `forensic_command` system |
+| Animation | `motion` v13 | Motion communicates state changes; every primitive honours `prefers-reduced-motion` |
+| 3D | three.js · @react-three/fiber · @react-three/drei | Anatomical viewer and the landing evidence network; lazily imported |
+| Graph | Custom canvas force simulation | Cools and settles rather than drifting; no second WebGL context |
+| Map | Custom canvas slippy map over OpenStreetMap tiles | Real streets, no API key, falls back to a coordinate grid offline |
+| Backend | Python 3.12+, FastAPI, SQLAlchemy 2.0 | Modular routes → services → models |
+| Database | PostgreSQL 16 + pgvector 0.8 | Relational, vector and graph storage in one engine |
+| Object storage | MinIO (S3-compatible) | Evidence files, versioning enabled |
+| Embeddings | `fastembed` (optional) → hashed lexical fallback | Runs offline with zero installs; upgrades to semantic when installed |
+| LLM | Provider interface: `mock` \| `groq` \| `xai` \| `anthropic` | Demo runs offline; live inference is one env var away, and a fallback is announced, never silent |
+
+### Deliberate honesty in the stack
+
+- **Hashing is cryptography, not AI.** Tamper-proofing must be deterministic and
+  provably reliable, so no model touches it.
+- **Location scoring is rule-based, not ML.** Every region exposes
+  `weight × value = contribution` for each factor.
+- **The AI provider is explicit about what ran.** With `COT_AI_PROVIDER=groq` the UI
+  shows `AI: LIVE`; the deterministic fallback shows `AI: MOCK`. A silent downgrade is
+  impossible — the badge reflects the provider that actually produced the output, and
+  `scripts/check_ai.py` exits non-zero if the configured provider is not the one running.
+- **The embedding fallback is lexical, not semantic.** It matches wording, not meaning,
+  and `describe()` says so rather than implying neural embeddings.
+
+
+### Using Groq for live inference
+
+The system ships configured for Groq. Add your key to `.env` in the repo root:
+
+```dotenv
+COT_AI_PROVIDER=groq
+GROQ_API_KEY=gsk_your_key_here
+COT_GROQ_MODEL=llama-3.3-70b-versatile
+```
+
+Get a key at <https://console.groq.com/keys> (the free tier is enough for the demo).
+Then verify — **before** you demo, not during it:
+
+```powershell
+cd backend
+python scripts\check_ai.py --models   # which models your key can reach
+python scripts\check_ai.py --live     # run a real extraction end to end
+```
+
+`check_ai.py` exits non-zero if `groq` is configured but the deterministic provider is
+what would actually run, so a silent fallback cannot go unnoticed.
+
+**Hallucination is contained by construction, not by prompt.** The model is instructed to
+quote verbatim; `groq_provider.py` then drops any fact whose value is not a literal
+substring of the source; and `services/analysis.py` re-verifies the character offsets
+independently before anything is written. A model that paraphrases produces zero facts
+rather than unattributable ones. Guidance citations are resolved against the curated
+knowledge base, so an invented section number resolves to no citation at all.
+
+---
+
+## Features
+
+### P0 — fully working
+- Evidence ingestion (file + text), SHA-256 hashing, hash-chained ledger
+- Two-person confirmation for physical evidence, enforced with Ed25519 signatures
+- Device metadata captured and **locked** at upload, cross-checked against officer shift
+- Structured entity extraction with **exact character offsets** into the source
+- Minute-precision contradiction detection with both conflicting excerpts
+- Confirm / Dismiss / Request-review gate, recorded permanently either way
+- Shared verified case timeline, ordered by event time (not upload time)
+- Evidence graph, RAG retrieval, audit trail on every **view** (not just edits)
+- Role-based access control across four officer roles
+
+### P1
+- Investigation Guidance Agent — RAG over a curated BNS/CrPC knowledge base, every
+  suggestion citing a section that is validated against the KB before display
+- Evidence gap detection, Case Closure Readiness with a transparent factor breakdown
+
+### P2 / additional
+- Autopsy cross-check with region-bound findings and a mandatory hypothesis disclaimer
+- Chargesheet QA (`PASS` / `WARNING` / `CONFLICT` / `MISSING SUPPORT`)
+- Predictive location with explainable geospatial scoring
+- Statement reliability (version diffing), digital evidence correlation,
+  case similarity search, multi-language statement handling, offline-first sync
 
 ---
 
 ## Quick start
 
-<<<<<<< HEAD
-**Requires Python 3.11 or newer.** (Tested on 3.12 and 3.14.)
-
-### 1. Clone and set up
-
-```bash
-git clone https://github.com/lisamehta0791/Chain-of-Truth.git
-cd Chain-of-Truth
-```
-
-Create a virtual environment and install the dependencies:
-
-<details open>
-<summary><strong>Windows (PowerShell)</strong></summary>
+Full walkthrough in **[docs/SETUP.md](docs/SETUP.md)**. Short version, from the repo root:
 
 ```powershell
-python -m venv .venv
+# 1. Database + object storage
+Copy-Item .env.example .env
+.\scripts\dev-up.ps1
+.\scripts\db-verify.ps1        # expects pgvector 0.8.x
+
+# 2. Backend
 .\.venv\Scripts\Activate.ps1
-pip install -r backend/requirements.txt
-```
-
-If PowerShell blocks the activate script, run this once:
-`Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`
-</details>
-
-<details>
-<summary><strong>macOS / Linux</strong></summary>
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r backend/requirements.txt
-```
-</details>
-
-### 2. Load the demo case
-
-```bash
+pip install -r backend\requirements.txt
 cd backend
-python scripts/seed_demo.py --reset
-```
-
-This creates four officers, a case (`CR-2026-0042`, a burglary), and five
-evidence items — four confirmed, one left waiting for a second officer so you
-can see the confirmation queue.
-
-### 3. Run the server
-
-```bash
+python scripts\seed_demo.py --reset     # evidence, ledger, custody, audit
+python scripts\seed_analysis.py         # KB, AI analysis, autopsy, location...
 python -m uvicorn app.main:app --reload --port 8000
-```
 
-Open **<http://127.0.0.1:8000/docs>** for interactive API documentation with a
-*Try it out* button on every endpoint.
-
-Every request needs an officer identity header — there is a box for it on each
-endpoint:
-
-```
-X-Officer-Id: 1
-```
-
-`1` is Insp. Anita Rao (the investigating officer), `2` is SI Bhaskar Nair (the
-supervisor). Stop the server with **Ctrl+C**.
-
----
-
-## Try it in two minutes
-
-With the server running and the demo case seeded, in the `/docs` page:
-
-| Endpoint | What you will see |
-| --- | --- |
-| `GET /api/v1/cases/1/ledger` | The hash chain. Each entry's `prev_hash` equals the previous entry's `entry_hash`. |
-| `GET /api/v1/cases/1/ledger/verify` | `"valid": true` — reached by recomputing every hash from genesis, not by reading a flag. |
-| `GET /api/v1/cases/1/evidence/pending` | The item still awaiting a second officer. Copy its `uid`. |
-| `POST /api/v1/evidence/{uid}/confirm` with `X-Officer-Id: 1` | **409 refused** — officer 1 logged it, so they cannot confirm it. That is the two-person rule. |
-| The same call with `X-Officer-Id: 2` | Confirmed, with two valid signatures. |
-| `GET /api/v1/audit` | Everything you just did, including the request that was refused. |
-
----
-
-## Running the tests
-
-From the `backend` folder, with the virtual environment active:
-
-```bash
-python scripts/self_check.py     # plain-English proof, 33 checks
-python -m pytest -q              # full suite, 113 tests
-```
-
-`self_check.py` is the one to run first. It exercises every requirement against
-a temporary database, then **deliberately attacks it** — rewrites a witness
-statement, swaps an evidence file, edits a ledger row, chops the end off the
-chain, forges a signature, deletes an audit record — and confirms each attack is
-caught. It prints one PASS/FAIL line per requirement and cleans up after itself.
-
-```
-  [PASS] the same officer CANNOT confirm their own item
-  [PASS] capture far from the logged shift is FLAGGED
-  [PASS] rewriting a witness statement in the database is CAUGHT
-  ...
-  33 passed, 0 failed
-```
-=======
-### Backend
-
-```bash
-cd backend
-python -m venv .venv
-# Windows: .\.venv\Scripts\Activate.ps1
-source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-```
-
-- Health: http://localhost:8000/health
-- API docs: http://localhost:8000/docs
-- API prefix: `/api/v1`
-
-Identify the acting officer on every request:
-
-```
-X-Officer-Id: 1
-# or
-X-Badge-Number: DEL-1042
-```
-
-### Seed demo data
-
-```bash
-cd backend
-python scripts/seed_demo.py
-```
-
-### Frontend
-
-```bash
+# 3. Frontend (NEW terminal, starting from the repo root)
 cd frontend
-pnpm install   # or npm install
-pnpm dev       # http://localhost:3000
+npm install
+npm run dev
 ```
 
-Point the UI at the backend via env if needed (`NEXT_PUBLIC_API_URL=http://localhost:8000`).
+If a path error or a port clash gets in the way, use the helper scripts instead.
+They resolve paths from the script location, so they work **from any directory**,
+and they stop a stale server on the port first:
 
----
-
-## Agent API (Part 3)
-
-| Method | Path | Purpose |
-| --- | --- | --- |
-| GET | `/api/v1/cases/{id}/guidance` | Investigation checklist (BNS/CrPC grounded) |
-| GET | `/api/v1/cases/{id}/autopsy-analysis` | Autopsy hypotheses — medical review required |
-| POST | `/api/v1/cases/{id}/chargesheet-qa` | Pre-filing QA checklist |
-| GET | `/api/v1/cases/{id}/analysis` | Timeline + contradictions + guidance |
-| GET | `/api/v1/legal-kb` | Transparency: curated legal knowledge base |
-
-All AI responses carry explicit **unverified / hypothesis** labels.
->>>>>>> origin/main
-
----
-
-## Project layout
-
-```
-<<<<<<< HEAD
-Chain-of-Truth/
-├── backend/                  Part 1 — evidence integrity layer
-│   ├── app/
-│   │   ├── api/              HTTP routes
-│   │   ├── core/             hashing, Ed25519 signatures, write lock
-│   │   ├── services/         ledger, evidence, audit, device metadata, sync
-│   │   ├── models.py         database schema
-│   │   └── main.py           application entry point
-│   ├── scripts/
-│   │   ├── seed_demo.py      loads the demo case
-│   │   └── self_check.py     one-command proof it works
-│   ├── tests/                113 tests
-│   ├── requirements.txt
-│   └── README.md             full technical documentation
-├── LICENSE
-└── README.md
+```powershell
+.\scripts\run-backend.ps1     # API on :8000
+.\scripts\run-frontend.ps1    # web on :3000
 ```
 
-**[`backend/README.md`](backend/README.md)** has the depth: how the hash chain is
-constructed, the full API reference, what each tamper attack is caught by, the
-integration hooks for the other parts of the system, and the known limitations
-stated plainly.
+| Service | URL |
+| --- | --- |
+| Frontend | http://localhost:3000 |
+| API docs (OpenAPI) | http://localhost:8000/docs |
+| MinIO console | http://localhost:9001 |
+
+Sign in at `/login` with any of the four seeded demo officers — the role you pick
+changes what you are permitted to do.
 
 ---
 
-## Configuration
+## Testing
 
-Everything defaults to a local SQLite database and a local storage folder, so
-there is nothing to configure to run it. To override:
+```powershell
+cd backend
+python -m pytest tests -q          # 123 tests
 
-| Variable | Default | Purpose |
-| --- | --- | --- |
-| `COT_DATABASE_URL` | `sqlite:///backend/chain_of_truth.db` | Database connection |
-| `COT_STORAGE_DIR` | `backend/storage/` | Where evidence files are written |
-| `COT_SHIFT_TOLERANCE_M` | `2000` | Distance before a capture location is flagged |
-| `COT_MAX_UPLOAD_BYTES` | `209715200` (200 MB) | Upload size limit |
-
----
-
-## The wider system
-
-Chain of Truth is designed in five parts. This repository holds the first; the
-rest read from and write to the verified case timeline this layer maintains.
-
-1. **Backend & tamper-proof ledger** — *this repo*
-2. AI extraction & RAG pipeline — entity extraction, contradiction detection
-3. Investigation guidance, autopsy cross-check and chargesheet QA agents
-4. Frontend — case timeline, contradiction flags, confirm/dismiss UI
-5. Security, integration and demo — role-based access control, encryption
-
-The integration points are documented in
-[`backend/README.md`](backend/README.md#integration-seams-for-the-other-parts).
-In short: other parts read confirmed evidence via
-`GET /api/v1/cases/{id}/evidence?status=CONFIRMED`, and write AI flags and the
-officer's confirm/dismiss decisions back into the same tamper-evident chain via
-`POST /api/v1/cases/{id}/ledger/append` — so what the AI said, and what the
-officer did about it, is as tamper-evident as the evidence itself.
-
-It is designed to sit **on top of** existing government systems such as CCTNS
-and ICJS, which digitise and share records but do not reason over them. This is
-an active analysis layer, not a replacement data backbone.
+cd ..\frontend
+npm run typecheck                     # tsc --noEmit
+npm run build                         # type errors fail the build
+```
 
 ---
 
-## Note on the demo build
+## Demo flow
 
-Two simplifications are worth stating openly rather than hiding:
+The seed deliberately **leaves the conflicting witness statement out**, so the
+contradiction can be created live on stage. See
+**[docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md)**.
 
-- **Officer signing keys are held server-side** so the demo can be seeded. A
-  production deployment keeps the private key in the officer's device keystore
-  or smart card and only ever sends the signature. The verification code is
-  identical either way.
-- **Identity is a request header**, replaced by real authentication and
-  role-based access control in Part 5. It is isolated in a single file
-  (`backend/app/api/deps.py`) precisely so it can be swapped out cleanly.
+1. Upload a witness statement saying the suspect left *"at about 9:00 PM"*
+2. Evidence registers → SHA-256 computed → hash chain extends (visible in 3D)
+3. AI extraction runs → entities appear tagged `AI-EXTRACTED · UNVERIFIED`, each beside
+   its exact source text
+4. CCTV metadata already in the case says **21:47** → a `MAJOR` time conflict is flagged,
+   47 minutes apart, with both excerpts and a confidence score
+5. Officer confirms or dismisses → recorded permanently, with the reason
+6. Verified timeline updates; readiness score moves; guidance suggests the next
+   procedural step, citing a real CrPC section
+
+One upload visibly changes five panels — that connected behaviour is the thing to
+demonstrate.
 
 ---
+
+## Security
+
+- Role-based access control: Investigating Officer / Supervisor / Forensic Reviewer /
+  Legal Reviewer, enforced by a FastAPI dependency (the hidden button is UX; the API
+  check is the control)
+- Append-only, self-hash-chained audit log covering views, not just edits
+- Victim/witness PII restricted by role; `is_protected` marks records for redaction
+- Evidence integrity: SHA-256 content hashes, chained ledger entries, Ed25519 signatures
+- Secrets exclusively from environment variables; `.env` is gitignored
+
+See **[docs/SECURITY.md](docs/SECURITY.md)**.
+
+---
+
+## Limitations — stated deliberately
+
+A tool for criminal justice should be honest about what it does not do.
+
+- **The hash chain proves records were not altered after upload.** It does not prove that
+  what was originally recorded was true. Two-person confirmation and locked device
+  metadata raise the bar from "one person can fake this alone" to "several independent
+  signals must be falsified together" — that is a real improvement, not a guarantee.
+- **The default analyser is deterministic and rule-based**, not a language model. It will
+  miss contradictions that require semantic understanding.
+- **The embedding fallback is lexical.** Install `fastembed` for semantic retrieval.
+- **Location scoring is a heuristic** for prioritising search areas. It is not a
+  prediction of where a person is.
+- **Autopsy output is an investigative hypothesis**, never a diagnosis or a
+  cause-of-death conclusion. It exists to flag gaps for a forensic medical officer.
+- **Encryption at rest** uses a development key file locally, not an HSM.
+- **Offline sync** is demo-grade: the queue and hash-preservation logic are real, but it
+  has not been hardened for prolonged disconnection or conflict resolution.
+- **The frontend currently runs on an in-memory demo store** seeded from
+  `lib/mock-data`. The FastAPI backend implements the full specification and is
+  independently tested; wiring the two together is remaining work.
+- **Demo data is entirely fictional.** No real person's information appears anywhere.
+
+---
+
+## How this differs from CCTNS / ICJS
+
+CCTNS and ICJS are record-keeping and data-sharing systems. They store what is entered;
+they do not read it, connect it, or flag problems within it. Chain of Truth is designed
+as an active reasoning layer that sits **on top of** that kind of infrastructure — it
+complements the data backbone rather than competing with it.
+
+---
+
+## Documentation
+
+| Document | Contents |
+| --- | --- |
+| [docs/SETUP.md](docs/SETUP.md) | Installation, Docker, database, troubleshooting |
+| [docs/SECURITY.md](docs/SECURITY.md) | RBAC, encryption, audit, trust boundary |
+| [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md) | Live demo walkthrough and judge Q&A |
+| [docs/INTEGRATION.md](docs/INTEGRATION.md) | How the agent layer wires into the ledger |
+| [docker/README.md](docker/README.md) | Container stack reference |
+| [docs/screenshots/](docs/screenshots/) | Screenshot filenames used by this README |
 
 ## License
 
-[MIT](LICENSE)
->>>>>>> origin/main
-=======
-backend/
-  app/
-    api/           # routes + deps + deps_rbac + routes_agents
-    core/          # signing, canonical JSON, locks
-    services/      # evidence, ledger, audit, sync, ai_engine
-    models.py schemas.py database.py main.py
-  scripts/         # seed_demo, self_check
-  tests/           # hash chain, two-person, audit, adversarial, …
-frontend/          # Next.js App Router dashboard
-docs/
-  INTEGRATION.md
-  DEMO_SCRIPT.md
-  SECURITY.md
-```
-
----
-
-## Docs
-
-- `docs/DEMO_SCRIPT.md` — 3–4 minute live demo + judge objections
-- `docs/SECURITY.md` — roles, encryption, trust boundary
-- `docs/INTEGRATION.md` — how agents were wired into the ledger
-- `backend/README.md` — Part 1 ledger details
-
----
-
-## Principle (never relax)
-
-1. AI never makes a legal determination and never files automatically.
-2. Verified case record ≠ AI working analysis layer.
-3. Courts see verified evidence + the transparent log of AI flags and officer responses.
-4. Complements CCTNS/ICJS; does not replace them.
-
----
-
-## Disclaimer
-
-Built for hackathon demonstration and architecture review. Production deployment requires formal legal review of the guidance knowledge base, hardened authentication, and integration adapters for official systems of record.
->>>>>>> origin/main
+MIT — see [LICENSE](LICENSE).

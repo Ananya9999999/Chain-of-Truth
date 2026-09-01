@@ -176,7 +176,7 @@ def log_evidence(
             status_code=422,
             code="AMBIGUOUS_CONTENT",
         )
-    if evidence_type in DEVICE_METADATA_REQUIRED_TYPES and not device_metadata:
+    if evidence_type.upper() in DEVICE_METADATA_REQUIRED_TYPES and not device_metadata:
         raise EvidenceError(
             f"{evidence_type} requires locked device metadata "
             "(device_id, capture_timestamp, GPS) at upload",

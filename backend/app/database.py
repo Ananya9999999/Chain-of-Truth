@@ -40,6 +40,15 @@ def get_db() -> Iterator[Session]:
 
 
 def init_db() -> None:
-    from . import models  # noqa: F401  (registers mappers)
+    from . import models, models_analysis, models_features  # noqa: F401  (registers mappers)
 
     Base.metadata.create_all(bind=engine)
+
+    # On PostgreSQL, add the native pgvector columns and HNSW indexes alongside
+    # the portable JSON embeddings, then backfill anything written earlier.
+    # No-op on SQLite. Imported here rather than at module scope to keep the
+    # import graph acyclic (rag -> models -> database).
+    from .rag.pgvector_setup import backfill_vectors, ensure_pgvector
+
+    ensure_pgvector(engine)
+    backfill_vectors(engine)

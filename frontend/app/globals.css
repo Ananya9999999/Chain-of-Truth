@@ -7,24 +7,33 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
+
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+
   --color-destructive: var(--destructive);
 
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
+
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
+
   --color-danger: var(--danger);
   --color-danger-foreground: var(--danger-foreground);
 
@@ -53,94 +62,1636 @@
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-xl: calc(var(--radius) * 1.3);
+  --radius-2xl: calc(var(--radius) * 1.6);
 }
 
-/* Forensic / security dark theme */
+
+/* =========================================================
+   CHAIN OF TRUTH
+   PREMIUM MIDNIGHT FORENSIC THEME
+   ========================================================= */
+
 :root {
   color-scheme: dark;
 
-  --background: oklch(0.17 0.012 255);
-  --foreground: oklch(0.93 0.008 255);
+  --background: oklch(0.105 0.025 255);
+  --foreground: oklch(0.95 0.008 250);
 
-  --card: oklch(0.215 0.014 256);
-  --card-foreground: oklch(0.93 0.008 255);
+  --card: oklch(0.145 0.025 255);
+  --card-foreground: oklch(0.95 0.008 250);
 
-  --popover: oklch(0.2 0.014 256);
-  --popover-foreground: oklch(0.93 0.008 255);
+  --popover: oklch(0.17 0.03 255);
+  --popover-foreground: oklch(0.95 0.008 250);
 
-  /* Steel-blue trustworthy brand accent */
-  --primary: oklch(0.68 0.13 235);
-  --primary-foreground: oklch(0.16 0.02 255);
+  /* ELECTRIC CYAN */
+  --primary: oklch(0.76 0.15 205);
+  --primary-foreground: oklch(0.08 0.025 250);
 
-  --secondary: oklch(0.27 0.015 256);
-  --secondary-foreground: oklch(0.93 0.008 255);
+  --secondary: oklch(0.175 0.028 255);
+  --secondary-foreground: oklch(0.93 0.01 250);
 
-  --muted: oklch(0.26 0.014 256);
-  --muted-foreground: oklch(0.66 0.012 256);
+  --muted: oklch(0.155 0.022 255);
+  --muted-foreground: oklch(0.68 0.018 250);
 
-  --accent: oklch(0.29 0.02 240);
-  --accent-foreground: oklch(0.95 0.008 255);
+  --accent: oklch(0.205 0.045 270);
+  --accent-foreground: oklch(0.96 0.01 250);
 
-  --destructive: oklch(0.63 0.2 25);
+  /* FORENSIC STATUS */
 
-  /* Status colors */
   --success: oklch(0.72 0.15 155);
-  --success-foreground: oklch(0.16 0.02 255);
+  --success-foreground: oklch(0.10 0.02 255);
+
   --warning: oklch(0.78 0.14 75);
-  --warning-foreground: oklch(0.16 0.02 255);
-  --danger: oklch(0.64 0.2 25);
-  --danger-foreground: oklch(0.97 0 0);
+  --warning-foreground: oklch(0.10 0.02 255);
 
-  --border: oklch(0.3 0.014 256 / 60%);
-  --input: oklch(0.3 0.014 256);
-  --ring: oklch(0.68 0.13 235);
+  --danger: oklch(0.64 0.21 27);
+  --danger-foreground: oklch(0.98 0 0);
 
-  --chart-1: oklch(0.68 0.13 235);
+  --destructive: oklch(0.64 0.21 27);
+
+  /* BORDERS */
+
+  --border: oklch(0.32 0.025 250 / 65%);
+  --input: oklch(0.22 0.03 255);
+  --ring: oklch(0.76 0.15 205);
+
+  /* CHARTS */
+
+  --chart-1: oklch(0.76 0.15 205);
   --chart-2: oklch(0.72 0.15 155);
   --chart-3: oklch(0.78 0.14 75);
-  --chart-4: oklch(0.64 0.2 25);
-  --chart-5: oklch(0.6 0.09 256);
+  --chart-4: oklch(0.64 0.21 27);
+  --chart-5: oklch(0.62 0.10 275);
 
-  --radius: 0.7rem;
+  --radius: 0.6rem;
 
-  --sidebar: oklch(0.195 0.013 256);
-  --sidebar-foreground: oklch(0.9 0.008 255);
-  --sidebar-primary: oklch(0.68 0.13 235);
-  --sidebar-primary-foreground: oklch(0.16 0.02 255);
-  --sidebar-accent: oklch(0.27 0.016 256);
-  --sidebar-accent-foreground: oklch(0.95 0.008 255);
-  --sidebar-border: oklch(0.3 0.014 256 / 60%);
-  --sidebar-ring: oklch(0.68 0.13 235);
+  /* SIDEBAR */
+
+  --sidebar: oklch(0.115 0.028 255);
+  --sidebar-foreground: oklch(0.92 0.01 250);
+
+  --sidebar-primary: oklch(0.76 0.15 205);
+  --sidebar-primary-foreground: oklch(0.08 0.025 250);
+
+  --sidebar-accent: oklch(0.17 0.035 255);
+  --sidebar-accent-foreground: oklch(0.96 0.01 250);
+
+  --sidebar-border: oklch(0.29 0.025 255 / 70%);
+  --sidebar-ring: oklch(0.76 0.15 205);
 }
 
+
+/* =========================================================
+   BASE
+   ========================================================= */
+
 @layer base {
+
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+
+    min-height: 100vh;
+
+    background-color: var(--background);
+
+    background-image:
+      radial-gradient(
+        ellipse 80% 50% at 50% -20%,
+        oklch(0.30 0.075 210 / 0.14),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 55% 45% at 100% 20%,
+        oklch(0.28 0.065 275 / 0.09),
+        transparent 65%
+      ),
+      radial-gradient(
+        ellipse 55% 45% at 0% 100%,
+        oklch(0.27 0.065 190 / 0.08),
+        transparent 65%
+      ),
+      linear-gradient(
+        oklch(1 0 0 / 0.008) 1px,
+        transparent 1px
+      );
+
+    background-size:
+      auto,
+      auto,
+      auto,
+      100% 4px;
+  }
+
+  button,
+  a,
+  input,
+  textarea,
+  select {
+    -webkit-tap-highlight-color: transparent;
   }
 }
+
+
+/* =========================================================
+   PREMIUM GLASS
+   ========================================================= */
 
 @layer utilities {
+
   .glass-card {
+    position: relative;
+    overflow: hidden;
+
     background:
       linear-gradient(
-        180deg,
-        color-mix(in oklch, var(--card) 92%, white 8%),
-        var(--card)
+        135deg,
+        oklch(0.19 0.035 250 / 0.72),
+        oklch(0.125 0.025 255 / 0.84)
       );
-    border: 1px solid var(--border);
+
+    border: 1px solid oklch(0.55 0.08 220 / 0.14);
+
     box-shadow:
-      0 1px 0 0 color-mix(in oklch, white 6%, transparent) inset,
-      0 8px 24px -12px oklch(0 0 0 / 60%);
+      0 1px 0 oklch(1 0 0 / 0.05) inset,
+      0 20px 60px -30px oklch(0 0 0 / 0.75),
+      0 0 40px -30px oklch(0.76 0.15 205 / 0.25);
+
+    backdrop-filter: blur(18px);
+
+    transition:
+      border-color 350ms ease,
+      box-shadow 350ms ease,
+      transform 350ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .glass-card:hover {
+    border-color: oklch(0.76 0.15 205 / 0.22);
+
+    box-shadow:
+      0 22px 65px -35px oklch(0 0 0 / 0.9),
+      0 0 40px -28px oklch(0.76 0.15 205 / 0.35),
+      0 1px 0 oklch(1 0 0 / 0.05) inset;
+  }
+
+
+  /* =====================================================
+     FORENSIC SURFACE
+     ===================================================== */
+
+  .forensic-surface {
+    background:
+      linear-gradient(
+        135deg,
+        oklch(0.17 0.028 255 / 0.8),
+        oklch(0.12 0.022 255 / 0.85)
+      );
+
+    border: 1px solid
+      color-mix(
+        in oklch,
+        var(--border) 90%,
+        transparent
+      );
+
+    box-shadow:
+      0 1px 0 oklch(1 0 0 / 0.035) inset,
+      0 12px 40px -28px oklch(0 0 0 / 0.75);
+
+    backdrop-filter: blur(14px);
+
+    transition:
+      border-color 350ms ease,
+      box-shadow 350ms ease;
+  }
+
+
+  /* =====================================================
+     FORENSIC GRID
+     ===================================================== */
+
+  .forensic-grid {
+    background-image:
+      linear-gradient(
+        oklch(0.5 0.05 220 / 0.035) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        oklch(0.5 0.05 220 / 0.035) 1px,
+        transparent 1px
+      ),
+      radial-gradient(
+        circle at 1px 1px,
+        oklch(0.65 0.08 210 / 0.045) 1px,
+        transparent 0
+      );
+
+    background-size:
+      48px 48px,
+      48px 48px,
+      24px 24px;
+  }
+
+
+  /* =====================================================
+     AMBIENT
+     ===================================================== */
+
+  .forensic-ambient {
+    position: relative;
+    isolation: isolate;
+
+    background:
+      radial-gradient(
+        ellipse 70% 45% at 50% -10%,
+        oklch(0.35 0.08 210 / 0.16),
+        transparent 65%
+      ),
+      radial-gradient(
+        ellipse 55% 40% at 100% 20%,
+        oklch(0.30 0.08 270 / 0.10),
+        transparent 65%
+      ),
+      radial-gradient(
+        ellipse 55% 45% at 0% 100%,
+        oklch(0.28 0.07 190 / 0.08),
+        transparent 65%
+      ),
+      var(--background);
+  }
+
+  .forensic-ambient::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+    z-index: -1;
+
+    background:
+      radial-gradient(
+        circle at 15% 15%,
+        oklch(0.72 0.15 205 / 0.055),
+        transparent 24%
+      ),
+      radial-gradient(
+        circle at 85% 25%,
+        oklch(0.62 0.10 275 / 0.045),
+        transparent 25%
+      ),
+      radial-gradient(
+        circle at 50% 100%,
+        oklch(0.72 0.15 155 / 0.025),
+        transparent 28%
+      );
+  }
+
+
+  /* =====================================================
+     HUD PANEL
+     ===================================================== */
+
+  .hud-panel {
+    position: relative;
+    overflow: hidden;
+
+    background:
+      linear-gradient(
+        135deg,
+        oklch(0.18 0.035 250 / 0.62),
+        oklch(0.105 0.025 255 / 0.82)
+      );
+
+    border: 1px solid oklch(0.55 0.08 220 / 0.16);
+
+    box-shadow:
+      0 1px 0 oklch(1 0 0 / 0.045) inset,
+      0 25px 70px -40px oklch(0 0 0 / 0.85);
+
+    backdrop-filter: blur(20px);
+  }
+
+  .hud-panel::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        oklch(0.76 0.15 205 / 0.025),
+        transparent
+      );
+
+    transform: translateX(-100%);
+    transition: transform 900ms ease;
+  }
+
+  .hud-panel:hover::before {
+    transform: translateX(100%);
+  }
+
+
+  /* =====================================================
+     SIGNAL EDGE
+     ===================================================== */
+
+  .signal-edge {
+    position: relative;
+  }
+
+  .signal-edge::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 1px;
+
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        oklch(0.76 0.15 205 / 0.55),
+        transparent
+      );
+
+    opacity: 0;
+
+    transition: opacity 300ms ease;
+  }
+
+  .signal-edge:hover::after {
+    opacity: 1;
+  }
+
+
+  /* =====================================================
+     GLOWS
+     ===================================================== */
+
+  .cyan-glow {
+    box-shadow:
+      0 0 25px oklch(0.76 0.15 205 / 0.12),
+      0 0 70px oklch(0.76 0.15 205 / 0.05);
+  }
+
+  .verified-glow {
+    box-shadow:
+      0 0 20px oklch(0.72 0.15 155 / 0.12),
+      0 0 50px oklch(0.72 0.15 155 / 0.04);
+  }
+
+
+  /* =====================================================
+     STATES
+     ===================================================== */
+
+  .verified-state {
+    border-color: oklch(0.72 0.15 155 / 0.22);
+
+    background:
+      linear-gradient(
+        135deg,
+        oklch(0.72 0.15 155 / 0.045),
+        transparent
+      );
+  }
+
+  .ai-state {
+    border-color: oklch(0.76 0.15 205 / 0.25);
+
+    background:
+      linear-gradient(
+        135deg,
+        oklch(0.76 0.15 205 / 0.05),
+        transparent
+      );
+  }
+
+  .warning-state {
+    border-color: oklch(0.78 0.14 75 / 0.28);
+
+    background:
+      linear-gradient(
+        135deg,
+        oklch(0.78 0.14 75 / 0.045),
+        transparent
+      );
+  }
+
+
+  /* =====================================================
+     DATA TEXT
+     ===================================================== */
+
+  .data-text {
+    font-family:
+      var(--font-geist-mono),
+      ui-monospace,
+      monospace;
+
+    letter-spacing: 0.04em;
+
+    text-shadow:
+      0 0 12px oklch(0.76 0.15 205 / 0.12);
+  }
+
+
+  /* =====================================================
+     DIVIDER
+     ===================================================== */
+
+  .forensic-divider {
+    position: relative;
+    height: 1px;
+
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        oklch(0.76 0.15 205 / 0.2),
+        oklch(0.32 0.025 250 / 0.5),
+        transparent
+      );
+  }
+
+
+  /* =====================================================
+     MICRO LIFT
+     ===================================================== */
+
+  .micro-lift {
+    transition:
+      transform 250ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 250ms ease;
+  }
+
+  .micro-lift:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+      0 12px 30px -24px oklch(0 0 0 / 0.9);
+  }
+
+
+  /* =====================================================
+     PREMIUM CARD
+     ===================================================== */
+
+  .premium-card {
+    position: relative;
+    overflow: hidden;
+
+    transition:
+      transform 500ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 400ms ease,
+      background-color 400ms ease,
+      box-shadow 400ms ease;
+  }
+
+  .premium-card::before {
+    content: "";
+
+    position: absolute;
+    left: -100%;
+    top: 0;
+
+    width: 100%;
+    height: 1px;
+
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        oklch(0.76 0.15 205),
+        transparent
+      );
+
+    transition:
+      left 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .premium-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+      0 18px 45px -28px oklch(0 0 0 / 0.8),
+      0 0 30px -25px oklch(0.76 0.15 205 / 0.3);
+  }
+
+  .premium-card:hover::before {
+    left: 100%;
+  }
+
+
+  /* =====================================================
+     PREMIUM BUTTON
+     ===================================================== */
+
+  .premium-button {
+    position: relative;
+    overflow: hidden;
+
+    transition:
+      color 300ms ease,
+      background-color 300ms ease,
+      transform 300ms ease,
+      box-shadow 300ms ease;
+  }
+
+  .premium-button::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+      linear-gradient(
+        90deg,
+        oklch(0.76 0.15 205),
+        oklch(0.82 0.12 205)
+      );
+
+    transform: translateX(-105%);
+
+    transition:
+      transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+
+    z-index: -1;
+  }
+
+  .premium-button:hover {
+    color: oklch(0.08 0.025 250);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+      0 10px 30px -15px
+      oklch(0.76 0.15 205 / 0.5);
+  }
+
+  .premium-button:hover::before {
+    transform: translateX(0);
+  }
+
+
+  /* =====================================================
+     STATUS GLOW
+     ===================================================== */
+
+  .status-glow {
+    position: relative;
+  }
+
+  .status-glow::after {
+    content: "";
+
+    position: absolute;
+    inset: -4px;
+
+    border-radius: 9999px;
+
+    background: currentColor;
+
+    opacity: 0.12;
+
+    filter: blur(4px);
+
+    animation:
+      statusGlow 2s ease-in-out infinite;
   }
 }
-<<<<<<< HEAD
-=======
 
+
+/* =========================================================
+   HERO ANIMATIONS
+   ========================================================= */
+
+@keyframes heroFade {
+
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+    filter: blur(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.hero-reveal {
+  animation:
+    heroFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-delay-1 {
+  animation-delay: 0.15s;
+}
+
+.hero-delay-2 {
+  animation-delay: 0.35s;
+}
+
+.hero-delay-3 {
+  animation-delay: 0.55s;
+}
+
+.hero-delay-4 {
+  animation-delay: 0.8s;
+}
+
+
+/* =========================================================
+   TITLE FLOAT
+   ========================================================= */
+
+@keyframes titleFloat {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+.title-float {
+  animation:
+    titleFloat 6s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   CURSOR
+   ========================================================= */
+
+@keyframes blinkCursor {
+
+  0%,
+  45% {
+    opacity: 1;
+  }
+
+  46%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.cursor-blink {
+  animation:
+    blinkCursor 1s steps(1) infinite;
+}
+
+
+/* =========================================================
+   GRID PULSE
+   ========================================================= */
+
+@keyframes gridPulse {
+
+  0%,
+  100% {
+    opacity: 0.035;
+  }
+
+  50% {
+    opacity: 0.11;
+  }
+}
+
+.animated-grid {
+  animation:
+    gridPulse 5s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   AMBIENT GLOW
+   ========================================================= */
+
+@keyframes glowMove {
+
+  0% {
+    transform:
+      translate(-50%, -50%)
+      scale(0.8);
+
+    opacity: 0.25;
+  }
+
+  50% {
+    transform:
+      translate(-50%, -50%)
+      scale(1.15);
+
+    opacity: 0.5;
+  }
+
+  100% {
+    transform:
+      translate(-50%, -50%)
+      scale(0.8);
+
+    opacity: 0.25;
+  }
+}
+
+.animated-glow {
+  animation:
+    glowMove 7s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   MARQUEE
+   ========================================================= */
+
+@keyframes marqueeMove {
+
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation:
+    marqueeMove 28s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+
+/* =========================================================
+   SECTION REVEAL
+   ========================================================= */
+
+@keyframes sectionRise {
+
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-reveal {
+  animation:
+    sectionRise 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+
+/* =========================================================
+   SCANNING LINE
+   ========================================================= */
+
+@keyframes scanLine {
+
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  85% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+.scan-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.scan-container::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  top: 0;
+
+  height: 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      oklch(0.76 0.15 205),
+      transparent
+    );
+
+  animation:
+    scanLine 4s linear infinite;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   STATUS PULSE
+   ========================================================= */
+
+@keyframes statusPulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.45;
+    transform: scale(0.8);
+  }
+}
+
+.status-pulse {
+  animation:
+    statusPulse 1.8s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   HASH NODES
+   ========================================================= */
+
+@keyframes nodePulse {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 0
+      oklch(0.72 0.15 155 / 0);
+  }
+
+  50% {
+    box-shadow:
+      0 0 22px
+      oklch(0.72 0.15 155 / 0.22);
+  }
+}
+
+.hash-node {
+  animation:
+    nodePulse 3s ease-in-out infinite;
+}
+
+.hash-node:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.hash-node:nth-child(3) {
+  animation-delay: 1s;
+}
+
+.hash-node:nth-child(4) {
+  animation-delay: 1.5s;
+}
+
+
+/* =========================================================
+   RED ALERT
+   ========================================================= */
+
+@keyframes alertPulse {
+
+  0%,
+  100% {
+    border-color:
+      oklch(0.64 0.21 27 / 0.25);
+
+    box-shadow:
+      0 0 0
+      oklch(0.64 0.21 27 / 0);
+  }
+
+  50% {
+    border-color:
+      oklch(0.64 0.21 27 / 0.8);
+
+    box-shadow:
+      0 0 24px
+      oklch(0.64 0.21 27 / 0.08);
+  }
+}
+
+.alert-animation {
+  animation:
+    alertPulse 2s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   TIMELINE DOT
+   ========================================================= */
+
+@keyframes timelinePulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+}
+
+.timeline-dot {
+  animation:
+    timelinePulse 2s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   CYAN SIGNAL
+   ========================================================= */
+
+@keyframes cyanSignal {
+
+  0%,
+  100% {
+    opacity: 0.3;
+
+    box-shadow:
+      0 0 0
+      oklch(0.76 0.15 205 / 0);
+  }
+
+  50% {
+    opacity: 1;
+
+    box-shadow:
+      0 0 14px
+      oklch(0.76 0.15 205 / 0.35);
+  }
+}
+
+.cyan-signal {
+  animation:
+    cyanSignal 2s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   DATA STREAM
+   ========================================================= */
+
+@keyframes dataStream {
+
+  0% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.8;
+  }
+
+  80% {
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: translateX(450%);
+    opacity: 0;
+  }
+}
+
+.data-stream {
+  animation:
+    dataStream 3s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   HUD FLOAT
+   ========================================================= */
+
+@keyframes hudFloat {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.hud-float {
+  animation:
+    hudFloat 4s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   STATUS GLOW
+   ========================================================= */
+
+@keyframes statusGlow {
+
+  0%,
+  100% {
+    transform: scale(0.85);
+    opacity: 0.08;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 0.22;
+  }
+}
+
+
+/* =========================================================
+   PREMIUM HEADER
+   ========================================================= */
+
+@keyframes headerReveal {
+
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header-reveal {
+  animation:
+    headerReveal 0.6s
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background:
+    oklch(0.32 0.025 255 / 65%);
+
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background:
+    oklch(0.45 0.04 220 / 75%);
+}
+
+
+/* =========================================================
+   SELECTION
+   ========================================================= */
+
+::selection {
+  background:
+    oklch(0.76 0.15 205 / 0.25);
+
+  color:
+    oklch(0.98 0.01 250);
+}
+
+
+/* =========================================================
+   INPUT FOCUS
+   ========================================================= */
+
+input:focus,
+textarea:focus,
+select:focus {
+  box-shadow:
+    0 0 0 3px
+      oklch(0.76 0.15 205 / 0.08),
+    0 0 20px -12px
+      oklch(0.76 0.15 205 / 0.5);
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+
+    animation-duration: 0.01ms !important;
+
+    animation-iteration-count: 1 !important;
+
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* =========================================================
+   MOBILE POLISH
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .glass-card,
+  .forensic-surface,
+  .hud-panel {
+    backdrop-filter: blur(12px);
+  }
+
+  body {
+    background-size:
+      auto,
+      auto,
+      auto,
+      100% 5px;
+  }
+}
+/* =========================================================
+   CHAIN OF TRUTH — CUSTOM FORENSIC CURSOR
+   ========================================================= */
+
+html,
+body {
+  cursor: crosshair;
+}
+
+/* Interactive elements */
+button,
+a,
+[role="button"],
+select,
+summary {
+  cursor: pointer;
+}
+
+/* Inputs stay normal */
+input,
+textarea {
+  cursor: text;
+}
+
+/* Disabled controls */
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+/* Optional: precision cursor for forensic UI */
+[data-forensic-cursor] {
+  cursor: crosshair;
+}
+/* =========================================================
+   CHAIN OF TRUTH — FORENSIC COMMAND CENTER BACKGROUND
+   ========================================================= */
+
+:root {
+  --forensic-grid-size: 42px;
+}
+
+/* Main application background */
+body {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  background:
+    radial-gradient(
+      circle at 12% 8%,
+      color-mix(in srgb, var(--primary) 7%, transparent),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 88% 18%,
+      color-mix(in srgb, var(--primary) 5%, transparent),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      color-mix(in srgb, var(--success) 3%, transparent),
+      transparent 32%
+    ),
+    var(--background);
+}
+
+/* =========================================================
+   TECHNICAL GRID
+   ========================================================= */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--foreground) 3%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--foreground) 3%, transparent) 1px,
+      transparent 1px
+    );
+
+  background-size:
+    var(--forensic-grid-size) var(--forensic-grid-size);
+
+  mask-image: radial-gradient(
+    ellipse at center,
+    black 15%,
+    rgba(0, 0, 0, 0.8) 55%,
+    transparent 100%
+  );
+}
+
+/* =========================================================
+   SOFT CENTER GLOW
+   ========================================================= */
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      color-mix(in srgb, var(--primary) 4%, transparent),
+      transparent 30%
+    );
+
+  opacity: 0.8;
+}
+
+/* =========================================================
+   FORENSIC AMBIENT LAYER
+   ========================================================= */
+
+.forensic-ambient {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Fine grain / technical texture */
+.forensic-ambient::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  opacity: 0.16;
+
+  background-image:
+    radial-gradient(
+      circle at 20% 30%,
+      color-mix(in srgb, var(--primary) 18%, transparent) 0 1px,
+      transparent 1.5px
+    ),
+    radial-gradient(
+      circle at 80% 65%,
+      color-mix(in srgb, var(--success) 12%, transparent) 0 1px,
+      transparent 1.5px
+    );
+
+  background-size:
+    170px 170px,
+    230px 230px;
+
+  animation: forensicParticles 18s linear infinite;
+}
+
+/* =========================================================
+   MOVING HORIZONTAL SCAN
+   ========================================================= */
+
+.forensic-ambient::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+
+  top: -20%;
+  height: 180px;
+
+  z-index: -1;
+  pointer-events: none;
+
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in srgb, var(--primary) 2%, transparent),
+    transparent
+  );
+
+  border-top: 1px solid
+    color-mix(in srgb, var(--primary) 7%, transparent);
+
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--primary) 3%, transparent);
+
+  opacity: 0.55;
+
+  animation: forensicScan 12s linear infinite;
+}
+
+/* =========================================================
+   KEYFRAMES
+   ========================================================= */
+
+@keyframes forensicScan {
+  0% {
+    transform: translateY(-20vh);
+  }
+
+  100% {
+    transform: translateY(120vh);
+  }
+}
+
+@keyframes forensicParticles {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(12px, -8px, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* =========================================================
+   GLASS CARDS
+   ========================================================= */
+
+.glass-card {
+  position: relative;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--card) 92%, transparent),
+      color-mix(in srgb, var(--card) 70%, transparent)
+    );
+
+  border: 1px solid
+    color-mix(in srgb, var(--border) 75%, transparent);
+
+  backdrop-filter: blur(16px);
+
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0
+      color-mix(in srgb, var(--foreground) 4%, transparent);
+
+  transition:
+    border-color 250ms ease,
+    box-shadow 250ms ease,
+    transform 250ms ease;
+}
+
+.glass-card:hover {
+  border-color:
+    color-mix(in srgb, var(--primary) 18%, var(--border));
+
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.12),
+    0 0 30px
+      color-mix(in srgb, var(--primary) 3%, transparent),
+    inset 0 1px 0
+      color-mix(in srgb, var(--foreground) 5%, transparent);
+}
+
+/* =========================================================
+   CARD TOP SCANNER
+   ========================================================= */
+
+.glass-card::before {
+  content: "";
+  position: absolute;
+
+  top: 0;
+  left: -30%;
+
+  width: 25%;
+  height: 1px;
+
+  background: var(--primary);
+
+  opacity: 0.5;
+
+  box-shadow:
+    0 0 10px
+      color-mix(in srgb, var(--primary) 55%, transparent);
+
+  animation: cardScanner 7s linear infinite;
+}
+
+@keyframes cardScanner {
+  0% {
+    left: -30%;
+  }
+
+  100% {
+    left: 130%;
+  }
+}
+
+/* =========================================================
+   FORENSIC SECTION LABEL
+   ========================================================= */
+
+.forensic-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    monospace;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+
+  color: var(--muted-foreground);
+}
+
+.forensic-label::before {
+  content: "";
+
+  width: 5px;
+  height: 5px;
+
+  border-radius: 999px;
+
+  background: var(--success);
+
+  box-shadow:
+    0 0 8px
+      color-mix(in srgb, var(--success) 65%, transparent);
+
+  animation: forensicDot 2s ease-in-out infinite;
+}
+
+@keyframes forensicDot {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+/* =========================================================
+   CUSTOM FORENSIC CURSOR
+   ========================================================= */
+
+html,
+body {
+  cursor: crosshair;
+}
+
+button,
+a,
+[role="button"],
+select,
+summary {
+  cursor: pointer;
+}
+
+input,
+textarea {
+  cursor: text;
+}
+
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   SELECTION
+   ========================================================= */
+
+::selection {
+  background:
+    color-mix(in srgb, var(--primary) 22%, transparent);
+
+  color: var(--foreground);
+}
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+
+  background:
+    color-mix(in srgb, var(--muted-foreground) 25%, transparent);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background:
+    color-mix(in srgb, var(--primary) 35%, transparent);
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .forensic-ambient::before,
+  .forensic-ambient::after,
+  .glass-card::before,
+  .forensic-label::before {
+    animation: none;
+  }
+}
 /* ── Motion system ── */
 @keyframes cot-fade-up {
   from { opacity: 0; transform: translateY(12px); }
@@ -210,4 +1761,201 @@
     .hover-lift:hover { transform: none; }
   }
 }
->>>>>>> origin/main
+
+/* ── Forensic background layers ───────────────────────────────────────────── */
+@keyframes cot-mote-drift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translate3d(14px, -46px, 0) scale(1.35); opacity: 0; }
+}
+@keyframes cot-scan-sweep {
+  0%   { top: -2%; }
+  100% { top: 102%; }
+}
+@keyframes cot-vein-flow {
+  to { stroke-dashoffset: -220; }
+}
+@keyframes cot-radar {
+  0%   { transform: scale(0.35); opacity: 0.75; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+@layer utilities {
+  .cot-mote {
+    animation-name: cot-mote-drift;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    will-change: transform, opacity;
+  }
+  .cot-scan {
+    animation: cot-scan-sweep 9s linear infinite;
+    will-change: top;
+  }
+  /* Light travelling along a vein path in the forensic body diagram. */
+  .cot-vein {
+    stroke-dasharray: 8 190;
+    animation: cot-vein-flow 5.5s linear infinite;
+  }
+  /* Expanding sweep around a priority location on the map. */
+  .cot-radar {
+    animation: cot-radar 3.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cot-mote, .cot-scan, .cot-vein, .cot-radar {
+      animation: none !important;
+      opacity: 0.35 !important;
+    }
+  }
+}
+
+/* ── Custom cursor handoff ────────────────────────────────────────────────────
+   The landing styles set `cursor: crosshair` on html/body. When the custom
+   forensic cursor mounts it stamps `data-cot-cursor` on <html>, and only then
+   is the native cursor hidden — so if the component never mounts (touch device,
+   reduced motion, JS failure) the normal cursor is still there. Interactive
+   elements keep a real pointer for accessibility and for anyone who disables
+   the effect. */
+html[data-cot-cursor],
+html[data-cot-cursor] body {
+  cursor: none;
+}
+html[data-cot-cursor] button,
+html[data-cot-cursor] a,
+html[data-cot-cursor] input,
+html[data-cot-cursor] select,
+html[data-cot-cursor] textarea,
+html[data-cot-cursor] [role='button'] {
+  cursor: none;
+}
+@media (pointer: coarse) {
+  html[data-cot-cursor],
+  html[data-cot-cursor] body {
+    cursor: auto;
+  }
+}
+
+/* ── Light theme ──────────────────────────────────────────────────────────────
+   The forensic identity survives the switch: the same cyan/emerald/amber/red
+   semantics, on a cool off-white ground instead of obsidian. Applied by
+   `html.theme-light`, which lib/theme.tsx sets before paint. Deliberately not
+   pure white — a slight blue-grey ground keeps the cyan accent legible and is
+   easier on the eye over a long session. */
+html.theme-light {
+  --background: oklch(0.975 0.004 250);
+  --foreground: oklch(0.22 0.02 255);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.22 0.02 255);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.22 0.02 255);
+
+  --primary: oklch(0.55 0.13 220);
+  --primary-foreground: oklch(0.99 0 0);
+
+  --secondary: oklch(0.945 0.008 250);
+  --secondary-foreground: oklch(0.28 0.02 255);
+
+  --muted: oklch(0.945 0.008 250);
+  --muted-foreground: oklch(0.48 0.02 255);
+
+  --accent: oklch(0.93 0.02 220);
+  --accent-foreground: oklch(0.24 0.03 240);
+
+  --border: oklch(0.89 0.008 250);
+  --input: oklch(0.89 0.008 250);
+  --ring: oklch(0.55 0.13 220);
+
+  --success: oklch(0.52 0.14 155);
+  --success-foreground: oklch(0.99 0 0);
+  --warning: oklch(0.62 0.15 75);
+  --warning-foreground: oklch(0.18 0.02 255);
+  --danger: oklch(0.55 0.20 25);
+  --danger-foreground: oklch(0.99 0 0);
+  --destructive: oklch(0.55 0.20 25);
+
+  --sidebar: oklch(0.985 0.003 250);
+  --sidebar-foreground: oklch(0.24 0.02 255);
+  --sidebar-primary: oklch(0.55 0.13 220);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.94 0.01 240);
+  --sidebar-accent-foreground: oklch(0.24 0.02 255);
+  --sidebar-border: oklch(0.89 0.008 250);
+  --sidebar-ring: oklch(0.55 0.13 220);
+}
+
+/* The landing page paints its own dark gradient on <body>; in light mode that
+   would fight the palette, so it is neutralised here rather than in JS. */
+html.theme-light body {
+  background-color: var(--background);
+  background-image: none;
+}
+
+
+
+/* ── Evidence document ("case file paper") ────────────────────────────────────
+   Statements and reports render as an aged case-file page rather than a UI card.
+   The physicality is the point: a witness statement is a document, and showing
+   it as one makes the difference between a recorded account and a machine
+   inference legible at a glance. Purely presentational — no content is altered. */
+.paper-doc {
+  position: relative;
+  background-color: #efe6d2;
+  background-image:
+    /* faint horizontal rule lines */
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 27px,
+      rgba(90, 70, 40, 0.10) 27px 28px
+    ),
+    /* uneven age tint */
+    radial-gradient(ellipse 60% 40% at 15% 10%, rgba(150, 120, 70, 0.14), transparent 60%),
+    radial-gradient(ellipse 50% 45% at 88% 82%, rgba(140, 110, 60, 0.13), transparent 62%);
+  color: #2a2118;
+  border: 1px solid rgba(120, 95, 55, 0.35);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.35),
+    0 10px 26px -18px rgba(0, 0, 0, 0.75),
+    inset 0 0 40px rgba(120, 90, 45, 0.10);
+}
+/* left margin rule, as on a real case-file sheet */
+.paper-doc::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  left: 2.25rem;
+  width: 1px;
+  background: rgba(170, 60, 60, 0.28);
+  pointer-events: none;
+}
+.paper-doc .paper-body {
+  font-family: 'Courier New', ui-monospace, monospace;
+  line-height: 28px;
+}
+.paper-stamp {
+  font-family: 'Courier New', ui-monospace, monospace;
+  letter-spacing: 0.14em;
+  border: 2px solid currentColor;
+  border-radius: 3px;
+  padding: 0.15rem 0.5rem;
+  transform: rotate(-7deg);
+  opacity: 0.78;
+}
+html.theme-light .paper-doc {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.12),
+    0 10px 26px -18px rgba(0, 0, 0, 0.35),
+    inset 0 0 40px rgba(120, 90, 45, 0.08);
+}
+
+/* ── Deep canvas surface ──────────────────────────────────────────────────────
+   Used by the panels that read as instrument screens: the graph, the hash
+   chain, the map frame and the anatomy viewer. Defined once with both themes so
+   these surfaces are not dark-mode assumptions baked into component markup. */
+.surface-deep {
+  background-color: #080b11;
+}
+html.theme-light .surface-deep {
+  background-color: #eef1f5;
+}

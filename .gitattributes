@@ -1,0 +1,24 @@
+# Normalize line endings: LF in the repository, native in the working tree.
+* text=auto
+
+# Windows-native tooling must keep CRLF
+*.ps1   text eol=crlf
+*.cmd   text eol=crlf
+*.bat   text eol=crlf
+
+# Files that must stay LF (run inside Linux containers)
+*.sh    text eol=lf
+*.sql   text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+Dockerfile text eol=lf
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.svg text
+*.glb binary
+*.gltf binary
+*.pdf binary
+*.pptx binary

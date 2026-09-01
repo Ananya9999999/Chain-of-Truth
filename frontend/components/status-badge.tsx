@@ -1,10 +1,11 @@
+import type { LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { BadgeCheck, CircleDashed, Sparkles } from 'lucide-react'
 import type { VerificationStatus } from '@/lib/mock-data'
 
 const config: Record<
   VerificationStatus,
-  { label: string; className: string; icon: React.ElementType }
+  { label: string; className: string; icon: LucideIcon }
 > = {
   verified: {
     label: 'VERIFIED',

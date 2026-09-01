@@ -1,3 +1,4 @@
+import type { LucideIcon } from 'lucide-react'
 import { PageHeader } from '@/components/pages/page-header'
 import { StatusBadge } from '@/components/status-badge'
 import { timelineEvents, type TimelineEvent } from '@/lib/mock-data'
@@ -10,7 +11,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-const typeIcon: Record<TimelineEvent['type'], React.ElementType> = {
+const typeIcon: Record<TimelineEvent['type'], LucideIcon> = {
   evidence: FileText,
   witness: MessageSquareText,
   cctv: Video,

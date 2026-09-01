@@ -1,3 +1,4 @@
+import type { LucideIcon } from 'lucide-react'
 import {
   LayoutDashboard,
   FolderLock,
@@ -6,27 +7,34 @@ import {
   Map,
   ScrollText,
   Settings,
-<<<<<<< HEAD
-=======
   Scale,
   Stethoscope,
   FileCheck2,
-  Link2,
->>>>>>> origin/main
+  Share2,
+  ClipboardCheck,
+  Gauge,
+  SearchCode,
+  MessagesSquare,
+  Smartphone,
+  AlertTriangle,
 } from 'lucide-react'
 
 export type PageKey =
   | 'overview'
   | 'evidence'
   | 'timeline'
+  | 'contradictions'
+  | 'verification'
+  | 'graph'
   | 'ai-flags'
-<<<<<<< HEAD
-=======
   | 'guidance'
+  | 'gaps'
+  | 'readiness'
   | 'autopsy'
   | 'chargesheet'
-  | 'chain'
->>>>>>> origin/main
+  | 'similarity'
+  | 'statements'
+  | 'correlation'
   | 'location'
   | 'audit'
   | 'settings'
@@ -34,26 +42,38 @@ export type PageKey =
 export type NavItem = {
   key: PageKey
   label: string
-  icon: React.ElementType
+  icon: LucideIcon
   badge: string | null
+  /** Groups the rail so nineteen entries stay navigable. */
+  group: 'Case' | 'AI analysis' | 'Review' | 'Integrity'
 }
 
 export const navItems: NavItem[] = [
-  { key: 'overview', label: 'Overview', icon: LayoutDashboard, badge: null },
-<<<<<<< HEAD
-  { key: 'evidence', label: 'Evidence', icon: FolderLock, badge: '18' },
-  { key: 'timeline', label: 'Case Timeline', icon: GitBranch, badge: null },
-  { key: 'ai-flags', label: 'AI Flags', icon: Flag, badge: '6' },
-=======
-  { key: 'evidence', label: 'Evidence', icon: FolderLock, badge: '3' },
-  { key: 'timeline', label: 'Case Timeline', icon: GitBranch, badge: null },
-  { key: 'ai-flags', label: 'AI Flags', icon: Flag, badge: '2' },
-  { key: 'guidance', label: 'Investigation Guidance', icon: Scale, badge: null },
-  { key: 'autopsy', label: 'Autopsy Agent', icon: Stethoscope, badge: null },
-  { key: 'chargesheet', label: 'Chargesheet QA', icon: FileCheck2, badge: null },
-  { key: 'chain', label: 'Hash Chain', icon: Link2, badge: null },
->>>>>>> origin/main
-  { key: 'location', label: 'Location Analysis', icon: Map, badge: null },
-  { key: 'audit', label: 'Audit Trail', icon: ScrollText, badge: null },
-  { key: 'settings', label: 'Settings', icon: Settings, badge: null },
+  // Case
+  { key: 'overview', label: 'Command Center', icon: LayoutDashboard, badge: null, group: 'Case' },
+  { key: 'evidence', label: 'Evidence', icon: FolderLock, badge: null, group: 'Case' },
+  { key: 'timeline', label: 'Case Timeline', icon: GitBranch, badge: null, group: 'Case' },
+  { key: 'graph', label: 'Evidence Graph', icon: Share2, badge: null, group: 'Case' },
+  { key: 'location', label: 'Forensic Map', icon: Map, badge: null, group: 'Case' },
+
+  // AI analysis
+  { key: 'contradictions', label: 'Contradictions', icon: AlertTriangle, badge: null, group: 'AI analysis' },
+  { key: 'ai-flags', label: 'AI Extractions', icon: Flag, badge: null, group: 'AI analysis' },
+  { key: 'guidance', label: 'Investigation Guidance', icon: Scale, badge: null, group: 'AI analysis' },
+  { key: 'gaps', label: 'Evidence Gaps', icon: SearchCode, badge: null, group: 'AI analysis' },
+  { key: 'autopsy', label: 'Autopsy Cross-Check', icon: Stethoscope, badge: null, group: 'AI analysis' },
+  { key: 'statements', label: 'Statement Reliability', icon: MessagesSquare, badge: null, group: 'AI analysis' },
+  { key: 'correlation', label: 'Digital Correlation', icon: Smartphone, badge: null, group: 'AI analysis' },
+  { key: 'similarity', label: 'Case Similarity', icon: SearchCode, badge: null, group: 'AI analysis' },
+
+  // Review
+  { key: 'verification', label: 'Review Queue', icon: ClipboardCheck, badge: null, group: 'Review' },
+  { key: 'readiness', label: 'Closure Readiness', icon: Gauge, badge: null, group: 'Review' },
+  { key: 'chargesheet', label: 'Chargesheet QA', icon: FileCheck2, badge: null, group: 'Review' },
+
+  // Integrity
+  { key: 'audit', label: 'Audit Trail', icon: ScrollText, badge: null, group: 'Integrity' },
+  { key: 'settings', label: 'System Integrity', icon: Settings, badge: null, group: 'Integrity' },
 ]
+
+export const navGroups = ['Case', 'AI analysis', 'Review', 'Integrity'] as const
