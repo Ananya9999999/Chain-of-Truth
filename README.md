@@ -21,25 +21,53 @@
 
 ## Screenshots
 
-> **Add 16 PNGs to [`docs/screenshots/`](docs/screenshots/)** using the exact
-> filenames listed in that folder's README, and the gallery below fills in.
-> Until then the image slots render empty.
+### Landing — cinematic opening
+![Landing](docs/screenshots/01-landing.png)
 
-<details>
-<summary><b>Open the screenshot gallery</b> (16 views)</summary>
+### Command Center — case summary, live counters, quick actions
+![Command Center](docs/screenshots/02-command-center.png)
 
-| | |
-| :--: | :--: |
-| ![Landing](docs/screenshots/01-landing.png) <br> **Landing** | ![Command Center](docs/screenshots/02-command-center.png) <br> **Command Center** |
-| ![Evidence Vault](docs/screenshots/03-evidence-vault.png) <br> **Evidence Vault** | ![Case Timeline](docs/screenshots/04-case-timeline.png) <br> **Case Timeline** |
-| ![Evidence Graph](docs/screenshots/05-evidence-graph.png) <br> **Evidence Graph** | ![Forensic Map](docs/screenshots/06-forensic-map.png) <br> **Forensic Map** |
-| ![Autopsy 3D](docs/screenshots/07-autopsy-3d.png) <br> **Autopsy Cross-Check (3D)** | ![Investigation Guidance](docs/screenshots/08-investigation-guidance.png) <br> **Investigation Guidance** |
-| ![Evidence Gaps](docs/screenshots/09-evidence-gaps.png) <br> **Evidence Gaps** | ![Statement Reliability](docs/screenshots/10-statement-reliability.png) <br> **Statement Reliability** |
-| ![Digital Correlation](docs/screenshots/11-digital-correlation.png) <br> **Digital Correlation** | ![Case Similarity](docs/screenshots/12-case-similarity.png) <br> **Case Similarity** |
-| ![Review Queue](docs/screenshots/13-review-queue.png) <br> **Human Verification** | ![Closure Readiness](docs/screenshots/14-closure-readiness.png) <br> **Closure Readiness** |
-| ![Chargesheet QA](docs/screenshots/15-chargesheet-qa.png) <br> **Chargesheet QA** | ![Audit Trail](docs/screenshots/16-audit-trail.png) <br> **Audit Trail** |
+### Evidence Vault — hash-sealed items, two-person confirmation
+![Evidence Vault](docs/screenshots/03-evidence-vault.png)
 
-</details>
+### Case Timeline — verified facts and AI events, interleaved but never merged
+![Case Timeline](docs/screenshots/04-case-timeline.png)
+
+### Evidence Graph — every edge is a real relationship from the case file
+![Evidence Graph](docs/screenshots/05-evidence-graph.png)
+
+### Forensic Map — real street map with the derived movement route
+![Forensic Map](docs/screenshots/06-forensic-map.png)
+
+### Autopsy Cross-Check — rotatable 3D anatomical viewer
+![Autopsy Cross-Check](docs/screenshots/07-autopsy-3d.png)
+
+### Investigation Guidance — checklist grounded in BNS / CrPC
+![Investigation Guidance](docs/screenshots/08-investigation-guidance.png)
+
+### Evidence Gaps — what the case is missing, and the next step
+![Evidence Gaps](docs/screenshots/09-evidence-gaps.png)
+
+### Statement Reliability — what changed between two accounts
+![Statement Reliability](docs/screenshots/10-statement-reliability.png)
+
+### Digital Evidence Correlation — tower and CCTV against the timeline
+![Digital Correlation](docs/screenshots/11-digital-correlation.png)
+
+### Case Similarity — method overlap, explicitly not proof
+![Case Similarity](docs/screenshots/12-case-similarity.png)
+
+### Human Verification — every AI finding waiting on a person
+![Review Queue](docs/screenshots/13-review-queue.png)
+
+### Case Closure Readiness — the score, with its arithmetic shown
+![Closure Readiness](docs/screenshots/14-closure-readiness.png)
+
+### Chargesheet QA — pre-filing consistency check
+![Chargesheet QA](docs/screenshots/15-chargesheet-qa.png)
+
+### Audit Trail — append-only, hash-chained, records views not just edits
+![Audit Trail](docs/screenshots/16-audit-trail.png)
 
 ---
 
@@ -307,7 +335,6 @@ complements the data backbone rather than competing with it.
 | [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md) | Live demo walkthrough and judge Q&A |
 | [docs/INTEGRATION.md](docs/INTEGRATION.md) | How the agent layer wires into the ledger |
 | [docker/README.md](docker/README.md) | Container stack reference |
-| [docs/screenshots/](docs/screenshots/) | Screenshot filenames used by this README |
 
 ## License
 
