@@ -23,7 +23,11 @@ export function ContradictionAlert() {
   return (
     <div
       className={cn(
+<<<<<<< HEAD
         'relative overflow-hidden rounded-xl border p-5 transition-colors',
+=======
+        'animate-pop relative overflow-hidden rounded-xl border p-5 transition-all duration-300',
+>>>>>>> origin/main
         confirmed
           ? 'border-danger/40 bg-danger/[0.06]'
           : resolution === 'dismissed'

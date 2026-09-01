@@ -43,7 +43,11 @@ export function CaseTimeline() {
             const Icon = typeIcon[ev.type]
             const isAI = ev.status === 'ai-extracted'
             return (
+<<<<<<< HEAD
               <li key={ev.id} className="relative flex gap-4 pb-5 last:pb-0">
+=======
+              <li key={ev.id} className="relative flex gap-4 pb-5 last:pb-0 stagger-item" style={{ ['--stagger-i' as string]: i }}>
+>>>>>>> origin/main
                 {i < timelineEvents.length - 1 && (
                   <span className="absolute top-9 left-[15px] h-full w-px bg-border" />
                 )}
@@ -60,7 +64,11 @@ export function CaseTimeline() {
 
                 <div
                   className={cn(
+<<<<<<< HEAD
                     'flex-1 rounded-lg border p-3.5 transition-colors',
+=======
+                    'flex-1 rounded-lg border p-3.5 transition-all duration-200 hover-lift',
+>>>>>>> origin/main
                     isAI
                       ? 'border-primary/25 bg-primary/[0.04] hover:border-primary/40'
                       : 'border-border bg-card/40 hover:border-border/80',
