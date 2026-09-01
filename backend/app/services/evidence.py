@@ -153,7 +153,7 @@ def log_evidence(
     recorded_at_device: str | None = None,
 ) -> Evidence:
     """Log one evidence item: store bytes, hash them, sign, chain, lock metadata."""
-    evidence_type = evidence_type.upper().strip()
+    evidence_type = evidence_type.lower().strip()
     if not text_content and file_stream is None:
         raise EvidenceError(
             "evidence must carry either a file or text_content",
