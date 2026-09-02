@@ -3,7 +3,7 @@
 Every AI output is labeled unverified / hypothesis and requires human review.
 These routes never write AI conclusions into the verified case record.
 
-Integration: mount this router from app.main (see docs/INTEGRATION.md).
+Mounted from app.main under the /api/v1 prefix.
 """
 from __future__ import annotations
 
@@ -203,7 +203,7 @@ def full_analysis(
     }
 
 
-# legal-kb is registered on a separate router in main (see INTEGRATION.md)
+# legal-kb is registered directly on the app in main.py
 def legal_kb_payload() -> dict[str, Any]:
     return {
         "count": len(LEGAL_KB),

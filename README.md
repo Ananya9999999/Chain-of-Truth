@@ -269,11 +269,10 @@ npm run build                         # type errors fail the build
 ## Demo flow
 
 The seed deliberately **leaves the conflicting witness statement out**, so the
-contradiction can be created live on stage. See
-**[docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md)**.
+contradiction can be created live on stage.
 
 1. Upload a witness statement saying the suspect left *"at about 9:00 PM"*
-2. Evidence registers → SHA-256 computed → hash chain extends (visible in 3D)
+2. Evidence registers → SHA-256 computed → hash chain extends
 3. AI extraction runs → entities appear tagged `AI-EXTRACTED · UNVERIFIED`, each beside
    its exact source text
 4. CCTV metadata already in the case says **21:47** → a `MAJOR` time conflict is flagged,
@@ -341,8 +340,6 @@ complements the data backbone rather than competing with it.
 | --- | --- |
 | [docs/SETUP.md](docs/SETUP.md) | Installation, Docker, database, troubleshooting |
 | [docs/SECURITY.md](docs/SECURITY.md) | RBAC, encryption, audit, trust boundary |
-| [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md) | Live demo walkthrough and judge Q&A |
-| [docs/INTEGRATION.md](docs/INTEGRATION.md) | How the agent layer wires into the ledger |
 | [docker/README.md](docker/README.md) | Container stack reference |
 
 ## License
