@@ -6,14 +6,9 @@
 > The AI never makes a legal determination, never files anything, and is never
 > treated as ground truth.
 
-<!-- ─────────────────────────────────────────────────────────────────────────
-     FILL THESE IN BEFORE SUBMITTING — replace the placeholder text only.
-     ───────────────────────────────────────────────────────────────────────── -->
-
 | | |
 | --- | --- |
-| **Live demo** | _paste deployed URL here_ |
-| **Demo video** | _paste video link here (YouTube / Drive / Loom)_ |
+| **Demo video** | https://drive.google.com/file/d/1sSlTqUiSX8uFD80XGc0FxugZKaJDVLvi/view?usp=sharing |
 | **Repository** | https://github.com/lisamehta0791/Chain_of_truth |
 | **Team** | Byte Me |
 
