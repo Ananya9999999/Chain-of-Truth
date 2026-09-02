@@ -69,6 +69,15 @@
 ### Audit Trail — append-only, hash-chained, records views not just edits
 ![Audit Trail](docs/screenshots/16-audit-trail.png)
 
+### Contradictions — conflicting sources, side by side
+![Contradictions](docs/screenshots/18-contradictions.png)
+
+### AI Extractions — every fact beside the text it came from
+![AI Extractions](docs/screenshots/19-ai-extractions.png)
+
+### System Integrity — role permission tiers
+![System Integrity](docs/screenshots/17-system-integrity.png)
+
 ---
 
 ## The problem
